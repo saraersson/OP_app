@@ -1,10 +1,10 @@
 
 
-class Parser {
+class Validator {
 
     PersonalNumber pn;
 
-    Parser(String input) {
+    Validator(String input) {
         this.pn = new PersonalNumber(input);
     }
 
@@ -13,11 +13,7 @@ class Parser {
         this.pn.parseBirthDate();
         this.pn.parseBirthNumber();
         this.pn.parseControlNumber();
-
     }
-
-
-
 
 
 

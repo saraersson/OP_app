@@ -8,8 +8,8 @@ public class Main {
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
 
-        Parser parser = new Parser(input);
-        parser.parse();
+        Validator validator = new Validator(input);
+        validator.parse();
         //  System.out.println(input);
     }
 }

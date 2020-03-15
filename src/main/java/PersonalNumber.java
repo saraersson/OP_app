@@ -5,7 +5,6 @@ class PersonalNumber {
     private String birthDate;
     private String birthNumber;
     private int controlNumber;
-    private boolean isOld;
 
     private static int BIRTHDATE = 0;
     private static int BIRTHNUMBER = 8;
@@ -28,10 +27,6 @@ class PersonalNumber {
         this.controlNumber = controlNumber;
     }
 
-    void setIsOld(boolean isOld) {
-        this.isOld = isOld;
-    }
-
 
     String getBirthDate() {
         return this.birthDate;
@@ -43,10 +38,6 @@ class PersonalNumber {
 
     int getControlNumber() {
         return this.controlNumber;
-    }
-
-    boolean isOld() {
-        return this.isOld;
     }
 
 

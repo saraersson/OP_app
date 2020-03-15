@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 public class PersonalNumberTest {
     PersonalNumber pn;
 
+
+    // parsing tests
     @Test
     public void legitLength10_1() {
         this.pn = new PersonalNumber("0002167829");
