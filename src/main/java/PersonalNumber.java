@@ -5,17 +5,17 @@ class PersonalNumber {
     private String birthDate;
     private String birthNumber;
     private int controlNumber;
-    private boolean isYoungerThanHundred;
+    private boolean isOld;
 
     PersonalNumber(String pn) {
         this.input = pn;
     }
 
-    PersonalNumber(String birthDate, String birthNumber, int controlNumber, boolean isYoungerThanHundred) {
+    PersonalNumber(String birthDate, String birthNumber, int controlNumber, boolean isOld) {
         this.birthDate = birthDate;
         this.birthNumber = birthNumber;
         this.controlNumber = controlNumber;
-        this.isYoungerThanHundred = isYoungerThanHundred;
+        this.isOld = isOld;
     }
 
     void setBirthDate(String birthDate) {
@@ -30,8 +30,8 @@ class PersonalNumber {
         this.controlNumber = controlNumber;
     }
 
-    void setIsYoungerThanHundred(boolean isYoungerThanHundred) {
-        this.isYoungerThanHundred = isYoungerThanHundred;
+    void setIsOld(boolean isOld) {
+        this.isOld = isOld;
     }
 
     String getBirthDate() {
@@ -46,24 +46,23 @@ class PersonalNumber {
         return this.controlNumber;
     }
 
-    boolean isYoungerThanHundred() {
-        return this.isYoungerThanHundred;
+    boolean isOld() {
+        return this.isOld;
     }
 
 
 
-
-    void setAge() {
+    void parseFormat() {
         int len = this.input.length();
         // check if under 100 years old
         if(len == 10) {
-            setIsYoungerThanHundred(true);
+            setIsOld(false);
             return;
         }
 
         // check if over 100 years old
         if(len == 11 && this.input.charAt(6) == '+') {
-            setIsYoungerThanHundred(false);
+            setIsOld(true);
             return;
         }
         // check if over 100 years old
@@ -71,12 +70,22 @@ class PersonalNumber {
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             int birthYear = Integer.parseInt((String) this.input.subSequence(0, 4));
             if(currentYear - birthYear > 100) {
-                setIsYoungerThanHundred(false);
+                setIsOld(true);
                 return;
             }
-            setIsYoungerThanHundred(true);
+            setIsOld(false);
             return;
         }
+    }
+
+    void parseBirthDate() {
+
+
+
+    }
+
+    void parseBirthNumber() {
+
     }
 }
 

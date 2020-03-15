@@ -9,12 +9,17 @@ class Parser {
     }
 
     void parse() {
-        this.pn.setAge();
-        System.out.println(this.pn.input);
-        System.out.println(this.pn.isYoungerThanHundred());
-
+        this.pn.parseFormat();
+        this.pn.parseBirthDate();
+        this.pn.parseBirthNumber();
 
     }
+
+
+
+
+
+
 
 
 
