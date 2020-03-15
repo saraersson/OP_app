@@ -12,6 +12,7 @@ class Parser {
         this.pn.parseFormat();
         this.pn.parseBirthDate();
         this.pn.parseBirthNumber();
+        this.pn.parseControlNumber();
 
     }
 

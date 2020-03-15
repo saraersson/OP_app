@@ -7,6 +7,10 @@ class PersonalNumber {
     private int controlNumber;
     private boolean isOld;
 
+    private static int BIRTHDATE = 0;
+    private static int BIRTHNUMBER = 8;
+    private static int CONTROLNUMBER = 11;
+
     PersonalNumber(String pn) {
         this.input = pn;
     }
@@ -48,8 +52,7 @@ class PersonalNumber {
 
 
     void parseFormat() {
-        int len = this.input.length();
-        // check if under 100 years old
+        final int len = this.input.length();
         switch (len) {
             case 10:
                 addCenturyPrefix('-');
@@ -68,10 +71,10 @@ class PersonalNumber {
         }
 
 
-    private void addCenturyPrefix(char option) {
+    private void addCenturyPrefix(final char option) {
         StringBuffer sb = new StringBuffer(this.input);
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        String currentPrefix = Integer.toString(currentYear).substring(0,2);
+        final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        final String currentPrefix = Integer.toString(currentYear).substring(0,2);
         int possibleBirthYear = Integer.parseInt(currentPrefix + this.input.substring(0,2));
 
         switch (option) {
@@ -91,7 +94,7 @@ class PersonalNumber {
 
                 break;
         }
-        String prefix = Integer.toString(possibleBirthYear).substring(0,2);
+        final String prefix = Integer.toString(possibleBirthYear).substring(0,2);
         sb.insert(0, prefix);
         this.input = sb.toString();
     }
@@ -102,13 +105,18 @@ class PersonalNumber {
     }
 
     void parseBirthDate() {
-
-
-
+        String birthDate = this.input.substring(BIRTHDATE,BIRTHNUMBER);
+        setBirthDate(birthDate);
     }
 
     void parseBirthNumber() {
+        String birthNumber = this.input.substring(BIRTHNUMBER,CONTROLNUMBER);
+        setBirthNumber(birthNumber);
+    }
 
+    void parseControlNumber() {
+        int controlNumber = Character.getNumericValue(this.input.charAt(CONTROLNUMBER));
+        setControlNumber(controlNumber);
     }
 }
 
