@@ -55,6 +55,7 @@ class PersonalNumber {
                 }
                 break;
             case 12:
+                // check if date has past yet
                 break;
             default:
                 throw new IllegalArgumentException("Illegal format on pn");
@@ -70,6 +71,8 @@ class PersonalNumber {
 
         switch (option) {
             case '+':
+                System.out.println("possible year: " + possibleBirthYear);
+                System.out.println("current year: " + currentYear);
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 200;
                 }
@@ -79,6 +82,8 @@ class PersonalNumber {
 
                 break;
             case '-':
+                System.out.println("possible year: " + possibleBirthYear);
+                System.out.println("current year: " + currentYear);
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 100;
                 }
