@@ -11,12 +11,6 @@ class PersonalNumber {
         this.input = pn;
     }
 
-    PersonalNumber(String birthDate, String birthNumber, int controlNumber, boolean isOld) {
-        this.birthDate = birthDate;
-        this.birthNumber = birthNumber;
-        this.controlNumber = controlNumber;
-        this.isOld = isOld;
-    }
 
     void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
@@ -33,6 +27,7 @@ class PersonalNumber {
     void setIsOld(boolean isOld) {
         this.isOld = isOld;
     }
+
 
     String getBirthDate() {
         return this.birthDate;
@@ -62,6 +57,9 @@ class PersonalNumber {
 
         // check if over 100 years old
         if(len == 11 && this.input.charAt(6) == '+') {
+            // remove '+' from String
+            StringBuffer sb = new StringBuffer(this.input);
+            this.input = sb.deleteCharAt(6).toString();
             setIsOld(true);
             return;
         }
