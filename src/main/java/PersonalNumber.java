@@ -50,30 +50,55 @@ class PersonalNumber {
     void parseFormat() {
         int len = this.input.length();
         // check if under 100 years old
-        if(len == 10) {
-            setIsOld(false);
-            return;
+        switch (len) {
+            case 10:
+                addCenturyPrefix('-');
+                break;
+            case 11:
+                if(this.input.charAt(6) == '+') {
+                    removePlus();
+                    addCenturyPrefix('+');
+                }
+                break;
+            case 12:
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal format on pn");
+            }
         }
 
-        // check if over 100 years old
-        if(len == 11 && this.input.charAt(6) == '+') {
-            // remove '+' from String
-            StringBuffer sb = new StringBuffer(this.input);
-            this.input = sb.deleteCharAt(6).toString();
-            setIsOld(true);
-            return;
+
+    private void addCenturyPrefix(char option) {
+        StringBuffer sb = new StringBuffer(this.input);
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        String currentPrefix = Integer.toString(currentYear).substring(0,2);
+        int possibleBirthYear = Integer.parseInt(currentPrefix + this.input.substring(0,2));
+
+        switch (option) {
+            case '+':
+                if(possibleBirthYear > currentYear) {
+                    possibleBirthYear -= 200;
+                }
+                else {
+                    possibleBirthYear -= 100;
+                }
+
+                break;
+            case '-':
+                if(possibleBirthYear > currentYear) {
+                    possibleBirthYear -= 100;
+                }
+
+                break;
         }
-        // check if over 100 years old
-        if(len == 12) {
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            int birthYear = Integer.parseInt((String) this.input.subSequence(0, 4));
-            if(currentYear - birthYear > 100) {
-                setIsOld(true);
-                return;
-            }
-            setIsOld(false);
-            return;
-        }
+        String prefix = Integer.toString(possibleBirthYear).substring(0,2);
+        sb.insert(0, prefix);
+        this.input = sb.toString();
+    }
+
+    private void removePlus() {
+        StringBuffer sb = new StringBuffer(this.input);
+        this.input = sb.deleteCharAt(6).toString();
     }
 
     void parseBirthDate() {
