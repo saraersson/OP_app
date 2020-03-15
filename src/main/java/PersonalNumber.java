@@ -1,4 +1,4 @@
-import java.time.YearMonth;
+import java.util.Calendar;
 
 class PersonalNumber {
     String input;
@@ -68,11 +68,13 @@ class PersonalNumber {
         }
         // check if over 100 years old
         if(len == 12) {
-            int currentYear = YearMonth.now().getYear();
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             int birthYear = Integer.parseInt((String) this.input.subSequence(0, 4));
             if(currentYear - birthYear > 100) {
                 setIsYoungerThanHundred(false);
+                return;
             }
+            setIsYoungerThanHundred(true);
             return;
         }
     }
