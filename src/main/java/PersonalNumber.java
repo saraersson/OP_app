@@ -41,14 +41,14 @@ class PersonalNumber {
         final int len = this.input.length();
         switch (len) {
             case 10:
-                checkShort('/');
+                check('/');
                 break;
 
             case 11:
                 if(this.input.charAt(6) == '+' || this.input.charAt(6) == '-' ) {
                     char separator = this.input.charAt(6);
                     removeSeparator(6);
-                    checkShort(separator);
+                    check(separator);
                 }
 
                 else {
@@ -57,13 +57,17 @@ class PersonalNumber {
                 break;
 
             case 12:
-                checkAndFixLong();
+                if(validFormat()) {
+                    removePrefix();
+                }
                 break;
 
             case 13:
                 if(this.input.charAt(8) == '-') {
                     removeSeparator(8);
-                    checkAndFixLong();
+                    if(validFormat()) {
+                        removePrefix();
+                    }
                 }
                 else {
                     invalidate();
@@ -82,22 +86,29 @@ class PersonalNumber {
 
     }
 
-    private void checkAndFixLong() {
+
+    private void check(char separator) {
         Logger.length(this.input.length());
         if(onlyDigits()) {
-            this.type.canBeSwedish = true;
-            this.type.canBeCoordination = true;
-         /*   if(separator == '/') {
-                addCenturyPrefix('-');
-            }
-            else {
-                addCenturyPrefix(separator);
-            } */
-            removePrefix();
-            Logger.format(this);
+            Logger.format(this,  separator);
         }
         else {
             invalidate();
+        }
+
+
+    }
+
+
+    private boolean validFormat() {
+        Logger.length(this.input.length());
+        if(onlyDigits()) {
+            Logger.format(this);
+            return true;
+        }
+        else {
+            invalidate();
+            return false;
         }
 
     }
@@ -110,25 +121,11 @@ class PersonalNumber {
 
     }
 
-
-    private void checkShort(char separator) {
-        Logger.length(this.input.length());
-        if(onlyDigits()) {
-            this.type.canBeSwedish = true;
-            this.type.canBeCoordination = true;
-         /*   if(separator == '/') {
-                addCenturyPrefix('-');
-            }
-            else {
-                addCenturyPrefix(separator);
-            } */
-            Logger.format(this,  separator);
-        }
-        else {
-            invalidate();
-        }
-
+    private void removeSeparator(int index) {
+        StringBuffer sb = new StringBuffer(this.fixed);
+        this.fixed = sb.deleteCharAt(index).toString();
     }
+
 
 
     boolean onlyDigits() {
@@ -153,43 +150,12 @@ class PersonalNumber {
         final int month = Integer.parseInt(this.fixed.substring(2,4));
         final int date = Integer.parseInt(this.fixed.substring(4,6));
 
-        switch (option) {
-            case '+':
-                if(possibleBirthYear > currentYear) {
-                    possibleBirthYear -= 200;
-                }
 
-                else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
-                    possibleBirthYear -= 200;
-                }
-
-                else {
-                    possibleBirthYear -= 100;
-                }
-
-                break;
-            case '-':
-
-                if(possibleBirthYear > currentYear) {
-                    possibleBirthYear -= 100;
-                }
-                else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
-                    possibleBirthYear -= 100;
-                }
-
-                break;
-            }
-        final String prefix = Integer.toString(possibleBirthYear).substring(0,2);
-        sb.insert(0, prefix);
-        this.fixed = sb.toString();
         }
         */
 
 
-    private void removeSeparator(int index) {
-        StringBuffer sb = new StringBuffer(this.fixed);
-        this.fixed = sb.deleteCharAt(index).toString();
-    }
+
 
     void parseBirthDate() {
         String birthDate = this.fixed.substring(BIRTHDATE,BIRTHNUMBER);
