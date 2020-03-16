@@ -2,7 +2,7 @@ public class Type {
     boolean canBeSwedish;
     boolean canBeCoordination;
     boolean canBeOrganisation;
-    boolean isInvalid;
+    boolean isInvalid = false;
 
     Type() {
 

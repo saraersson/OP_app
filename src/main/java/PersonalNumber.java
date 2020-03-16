@@ -86,6 +86,7 @@ class PersonalNumber {
                 else {
                     invalidate(len);
                 }
+                break;
 
             default:
                 invalidate(len);
@@ -132,7 +133,6 @@ class PersonalNumber {
             }
         }
         return true;
-
     }
 
 

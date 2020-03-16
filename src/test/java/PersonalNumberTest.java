@@ -15,6 +15,7 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"20000216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
@@ -26,6 +27,7 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"19950216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(), 9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
@@ -37,6 +39,7 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"19000216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
@@ -48,6 +51,7 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"18950216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
@@ -59,12 +63,13 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"19890216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
 
 
     @Test
-    public void legit12Under() {
+    public void legit12() {
         ValidityChecker vc = new ValidityChecker(new PersonalNumber("199502167829"));
         vc.narrowDownPossibilities();
 
@@ -72,17 +77,20 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"19950216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
+
     @Test
-    public void legit12Above() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("189502167829"));
+    public void legit13() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("20000525-7829"));
         vc.narrowDownPossibilities();
 
-        assertEquals(vc.pn.fixed,"189502167829");
-        assertEquals(vc.pn.getBirthDate(),"18950216");
+        assertEquals(vc.pn.fixed,"200005257829");
+        assertEquals(vc.pn.getBirthDate(),"20000525");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(), 9);
+        assertFalse(vc.pn.type.isInvalid);
     }
 
 
