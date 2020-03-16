@@ -10,16 +10,16 @@ class PersonalNumber {
 
 
     private static int BIRTHDATE = 0;
-    static int COORDINATION = 11;
-    private static int BIRTHNUMBER = 8;
-    private static int CONTROLNUMBER = 11;
+    static int COORDINATION = 9;
+    private static int BIRTHNUMBER = 6;
+    private static int CONTROLNUMBER = 9;
 
 
     PersonalNumber(String pn) {
         this.input = pn;
         this.fixed = pn;
     }
-    
+
 
 
     String getBirthDate() {
@@ -41,14 +41,14 @@ class PersonalNumber {
         final int len = this.input.length();
         switch (len) {
             case 10:
-                checkAndFix10('/');
+                checkShort('/');
                 break;
 
             case 11:
                 if(this.input.charAt(6) == '+' || this.input.charAt(6) == '-' ) {
                     char separator = this.input.charAt(6);
                     removeSeparator(6);
-                    checkAndFix10(separator);
+                    checkShort(separator);
                 }
 
                 else {
@@ -57,13 +57,13 @@ class PersonalNumber {
                 break;
 
             case 12:
-                check12();
+                checkAndFixLong();
                 break;
 
             case 13:
                 if(this.input.charAt(8) == '-') {
                     removeSeparator(8);
-                    check12();
+                    checkAndFixLong();
                 }
                 else {
                     invalidate();
@@ -82,17 +82,46 @@ class PersonalNumber {
 
     }
 
-    private void checkAndFix10(char separator) {
+    private void checkAndFixLong() {
         Logger.length(this.input.length());
         if(onlyDigits()) {
             this.type.canBeSwedish = true;
             this.type.canBeCoordination = true;
-            if(separator == '/') {
+         /*   if(separator == '/') {
                 addCenturyPrefix('-');
             }
             else {
                 addCenturyPrefix(separator);
+            } */
+            removePrefix();
+            Logger.format(this);
+        }
+        else {
+            invalidate();
+        }
+
+    }
+
+    private void removePrefix() {
+        System.out.println(this.fixed);
+        StringBuffer sb = new StringBuffer(this.fixed);
+        this.fixed = sb.delete(0,2).toString();
+        System.out.println(this.fixed);
+
+    }
+
+
+    private void checkShort(char separator) {
+        Logger.length(this.input.length());
+        if(onlyDigits()) {
+            this.type.canBeSwedish = true;
+            this.type.canBeCoordination = true;
+         /*   if(separator == '/') {
+                addCenturyPrefix('-');
             }
+            else {
+                addCenturyPrefix(separator);
+            } */
             Logger.format(this,  separator);
         }
         else {
@@ -100,19 +129,6 @@ class PersonalNumber {
         }
 
     }
-
-    private void check12() {
-        if(onlyDigits()) {
-            this.type.canBeSwedish = true;
-            this.type.canBeCoordination = true;
-            Logger.format(this, this.input.length());
-        }
-        else {
-            invalidate();
-        }
-
-    }
-
 
 
     boolean onlyDigits() {
@@ -125,7 +141,7 @@ class PersonalNumber {
     }
 
 
-    private void addCenturyPrefix(final char option) {
+   /* private void addCenturyPrefix(final char option) {
         StringBuffer sb = new StringBuffer(this.fixed);
         final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
@@ -167,6 +183,7 @@ class PersonalNumber {
         sb.insert(0, prefix);
         this.fixed = sb.toString();
         }
+        */
 
 
     private void removeSeparator(int index) {

@@ -32,8 +32,8 @@ public class Logger {
         System.out.println("The length " + " of the input is between 10 and 13.");
     }
 
-    static void format(PersonalNumber pn, int len) {
-        switch(len) {
+    static void format(PersonalNumber pn) {
+        switch(pn.input.length()) {
             case 10:
                 System.out.println(pn.input + ": The given input is in the format YYMMDDXXXX");
                 break;
