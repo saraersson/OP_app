@@ -1,13 +1,13 @@
 public class Logger {
 
-    static void invalidFormat(int len){      // throwing the exceptions
+    static void invalidFormat(PersonalNumber pn, int len){      // throwing the exceptions
 
         if (len < 10)
             System.out.println("A social security number must be at least 10 characters long.");
         else if (len > 13)
             System.out.println("A social security number must not be more than 13 characters long.");
         else {
-            System.out.println("Invalid characters in given input.");
+            System.out.println("Invalid characters in given input: " + pn.input);
         }
 
     }
@@ -32,19 +32,19 @@ public class Logger {
         System.out.println("The length " + " of the input is between 10 and 13.");
     }
 
-    static void format(int len) {
+    static void format(PersonalNumber pn, int len) {
         switch(len) {
             case 10:
-                System.out.println("The given input is in the format YYMMDDXXXX");
+                System.out.println(pn.input + ": The given input is in the format YYMMDDXXXX");
                 break;
             case 11:
-                System.out.println("The given input is in the format YYMMDD-XXXX");
+                System.out.println(pn.input + ": The given input is in the format YYMMDD-XXXX");
                 break;
             case 12:
-                System.out.println("The given input is in the format YYYYMMDDXXXX");
+                System.out.println(pn.input + ": The given input is in the format YYYYMMDDXXXX");
                 break;
             case 13:
-                System.out.println("The given input is in the format YYYYMMDD-XXXX");
+                System.out.println(pn.input + ": The given input is in the format YYYYMMDD-XXXX");
                 break;
             default:
                 System.out.println("No idea...");
@@ -52,8 +52,13 @@ public class Logger {
 
     }
 
-    static void format(int len, char separator) {
-        System.out.println("The given input is in the format YYMMDD" + separator+ "XXXX");
+    static void format(PersonalNumber pn, char separator) {
+        if (separator == '/') {
+            System.out.println(pn.input + ": The given input is in the format YYMMDDXXXX");
+        }
+        else {
+            System.out.println(pn.input + ": The given input is in the format YYMMDD" + separator + "XXXX");
+        }
 
 
     }

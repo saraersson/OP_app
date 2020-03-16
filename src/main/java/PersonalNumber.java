@@ -19,19 +19,7 @@ class PersonalNumber {
         this.input = pn;
         this.fixed = pn;
     }
-
-
- /*   void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    void setBirthNumber(String birthNumber) {
-        this.birthNumber = birthNumber;
-    }
-
-    void setControlNumber(int controlNumber) {
-        this.controlNumber = controlNumber;
-    } */
+    
 
 
     String getBirthDate() {
@@ -53,7 +41,7 @@ class PersonalNumber {
         final int len = this.input.length();
         switch (len) {
             case 10:
-                checkAndFix10('-');
+                checkAndFix10('/');
                 break;
 
             case 11:
@@ -90,7 +78,7 @@ class PersonalNumber {
 
     private void invalidate() {
         this.type.isInvalid = true;
-        Logger.invalidFormat(this.input.length());
+        Logger.invalidFormat(this, this.input.length());
 
     }
 
@@ -99,8 +87,13 @@ class PersonalNumber {
         if(onlyDigits()) {
             this.type.canBeSwedish = true;
             this.type.canBeCoordination = true;
-            addCenturyPrefix(separator);
-            Logger.format(this.input.length(), separator);
+            if(separator == '/') {
+                addCenturyPrefix('-');
+            }
+            else {
+                addCenturyPrefix(separator);
+            }
+            Logger.format(this,  separator);
         }
         else {
             invalidate();
@@ -112,7 +105,7 @@ class PersonalNumber {
         if(onlyDigits()) {
             this.type.canBeSwedish = true;
             this.type.canBeCoordination = true;
-            Logger.format(this.input.length());
+            Logger.format(this, this.input.length());
         }
         else {
             invalidate();
@@ -137,18 +130,15 @@ class PersonalNumber {
         final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         final int currentDate = Calendar.getInstance().get(Calendar.DATE);
-        System.out.println("year: " + currentYear);
-        System.out.println("month: " + currentMonth);
-        System.out.println("date: " + currentDate);
+
+
         final String currentPrefix = Integer.toString(currentYear).substring(0,2);
         int possibleBirthYear = Integer.parseInt(currentPrefix + this.fixed.substring(0,2));
-        int month = Integer.parseInt(this.fixed.substring(2,4));
-        int date = Integer.parseInt(this.fixed.substring(4,6));
-        System.out.println(option);
+        final int month = Integer.parseInt(this.fixed.substring(2,4));
+        final int date = Integer.parseInt(this.fixed.substring(4,6));
+
         switch (option) {
             case '+':
-                System.out.println("possible year: " + possibleBirthYear);
-                System.out.println("current year: " + currentYear);
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 200;
                 }
@@ -164,8 +154,6 @@ class PersonalNumber {
                 break;
             case '-':
 
-                System.out.println("possible year: " + possibleBirthYear);
-                System.out.println("current year: " + currentYear);
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 100;
                 }
@@ -192,7 +180,6 @@ class PersonalNumber {
     }
 
     void parseBirthNumber() {
-        System.out.println(this.fixed);
         String birthNumber = this.fixed.substring(BIRTHNUMBER,CONTROLNUMBER);
         this.birthNumber = birthNumber;
     }

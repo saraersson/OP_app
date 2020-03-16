@@ -30,6 +30,31 @@ public class PersonalNumberTest {
         assertFalse(vc.pn.type.isInvalid);
     }
 
+
+    @Test
+    public void legit10_3() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2001167829"));
+        vc.narrowDownPossibilities();
+
+        assertEquals(vc.pn.fixed,"202001167829");
+        assertEquals(vc.pn.getBirthDate(),"20200116");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(), 9);
+        assertFalse(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void legit10_4() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2005167829"));
+        vc.narrowDownPossibilities();
+
+        assertEquals(vc.pn.fixed,"192005167829");
+        assertEquals(vc.pn.getBirthDate(),"19200516");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(), 9);
+        assertFalse(vc.pn.type.isInvalid);
+    }
+
     @Test
     public void legit11Plus_1() {
         ValidityChecker vc = new ValidityChecker(new PersonalNumber("000216+7829"));
@@ -51,6 +76,18 @@ public class PersonalNumberTest {
         assertEquals(vc.pn.getBirthDate(),"18950216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(),9);
+        assertFalse(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void legit11Plus_3() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("200116+7829"));
+        vc.narrowDownPossibilities();
+
+        assertEquals(vc.pn.fixed,"192001167829");
+        assertEquals(vc.pn.getBirthDate(),"19200116");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(), 9);
         assertFalse(vc.pn.type.isInvalid);
     }
 

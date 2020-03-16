@@ -17,6 +17,7 @@ public class Main {
                 System.out.println("birth date: " + validator.pn.getBirthDate());
                 System.out.println("birth number: " + validator.pn.getBirthNumber());
                 System.out.println("control number: " + validator.pn.getControlNumber());
+                System.out.println();
             }
 
 
