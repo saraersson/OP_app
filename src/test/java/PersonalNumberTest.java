@@ -3,92 +3,86 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PersonalNumberTest {
-    PersonalNumber pn;
 
 
     // parsing tests
     @Test
-    public void legitLength10_1() {
-        this.pn = new PersonalNumber("0002167829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+    public void legit10_1() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("0002167829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"200002167829");
-        assertEquals(this.pn.getBirthDate(),"20000216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(),9);
+        assertEquals(vc.pn.fixed,"200002167829");
+        assertEquals(vc.pn.getBirthDate(),"20000216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(),9);
     }
 
     @Test
-    public void legitLength10_2() {
-        this.pn = new PersonalNumber("9502167829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+    public void legit10_2() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("9502167829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"199502167829");
-        assertEquals(this.pn.getBirthDate(),"19950216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(), 9);
+        assertEquals(vc.pn.fixed,"199502167829");
+        assertEquals(vc.pn.getBirthDate(),"19950216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(), 9);
     }
 
     @Test
-    public void legitWithPlus_1() {
-        this.pn = new PersonalNumber("000216+7829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+    public void legit11Plus_1() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("000216+7829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"190002167829");
-        assertEquals(this.pn.getBirthDate(),"19000216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(),9);
+        assertEquals(vc.pn.fixed,"190002167829");
+        assertEquals(vc.pn.getBirthDate(),"19000216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(),9);
     }
 
     @Test
-    public void legitWithPlus_2() {
-        this.pn = new PersonalNumber("950216+7829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+    public void legit11Plus_2() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("950216+7829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"189502167829");
-        assertEquals(this.pn.getBirthDate(),"18950216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(),9);
+        assertEquals(vc.pn.fixed,"189502167829");
+        assertEquals(vc.pn.getBirthDate(),"18950216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(),9);
     }
+
+    @Test
+    public void legit11Minus_1() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("890216-7829"));
+        vc.narrowDownPossibilities();
+
+        assertEquals(vc.pn.fixed,"198902167829");
+        assertEquals(vc.pn.getBirthDate(),"19890216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(),9);
+    }
+
+
 
     @Test
     public void legit12Under() {
-        this.pn = new PersonalNumber("199502167829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("199502167829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"199502167829");
-        assertEquals(this.pn.getBirthDate(),"19950216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(),9);
+        assertEquals(vc.pn.fixed,"199502167829");
+        assertEquals(vc.pn.getBirthDate(),"19950216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(),9);
     }
 
     @Test
     public void legit12Above() {
-        this.pn = new PersonalNumber("189502167829");
-        this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("189502167829"));
+        vc.narrowDownPossibilities();
 
-        assertEquals(this.pn.input,"189502167829");
-        assertEquals(this.pn.getBirthDate(),"18950216");
-        assertEquals(this.pn.getBirthNumber(),"782");
-        assertEquals(this.pn.getControlNumber(), 9);
+        assertEquals(vc.pn.fixed,"189502167829");
+        assertEquals(vc.pn.getBirthDate(),"18950216");
+        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.getControlNumber(), 9);
     }
 
 
