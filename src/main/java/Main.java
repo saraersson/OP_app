@@ -10,15 +10,16 @@ public class Main {
         while(in.hasNext()) {
             String input = in.nextLine();
             Validator validator = new Validator(input);
+            
             if(validator.isValid()) {
-                Logger.printResult(validator.pn);
+                System.out.println("input: " + input);
+                System.out.println("fixed: " + validator.pn.fixed);
+                System.out.println("birth date: " + validator.pn.getBirthDate());
+                System.out.println("birth number: " + validator.pn.getBirthNumber());
+                System.out.println("control number: " + validator.pn.getControlNumber());
             }
-            System.out.println("input: " + input);
-            System.out.println("set input: " + validator.pn.input);
-            System.out.println("fixed: " + validator.pn.fixed);
-            System.out.println("birth date: " + validator.pn.getBirthDate());
-            System.out.println("birth number: " + validator.pn.getBirthNumber());
-            System.out.println("control number: " + validator.pn.getControlNumber());
+
+
 
         }
     }

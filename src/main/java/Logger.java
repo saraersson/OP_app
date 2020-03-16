@@ -27,5 +27,37 @@ public class Logger {
     static void cantBeOrganisation() {
         System.out.println("The input given is not an organisation nr.");
     }
+
+    static void length(int len) {
+        System.out.println("The length " + " of the input is between 10 and 13.");
+    }
+
+    static void format(int len) {
+        switch(len) {
+            case 10:
+                System.out.println("The given input is in the format YYMMDDXXXX");
+                break;
+            case 11:
+                System.out.println("The given input is in the format YYMMDD-XXXX");
+                break;
+            case 12:
+                System.out.println("The given input is in the format YYYYMMDDXXXX");
+                break;
+            case 13:
+                System.out.println("The given input is in the format YYYYMMDD-XXXX");
+                break;
+            default:
+                System.out.println("No idea...");
+        }
+
+    }
+
+    static void format(int len, char separator) {
+        System.out.println("The given input is in the format YYMMDD" + separator+ "XXXX");
+
+
+    }
+
+
 }
 
