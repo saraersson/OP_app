@@ -18,12 +18,12 @@ class Validator {
         ValidityChecker vc = new ValidityChecker(this.pn);
 
         vc.narrowDownPossibilities();
-        if(this.pn.type.canBeSwedish) {
+      /*  if(this.pn.type.canBeSwedish) {
             System.out.println("Could be Swedish");
            /* if (vc.isSwedish()) {
                 return true;
             }*/
-        }/*
+       /* }/*
         else if(vc.isCoordination(this.pn)) {
             return true;
         }

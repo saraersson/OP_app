@@ -15,10 +15,7 @@ class PersonalNumber {
     private static int CONTROLNUMBER = 11;
 
 
-
-
     PersonalNumber(String pn) {
-
         this.input = pn;
         this.fixed = pn;
     }
@@ -56,54 +53,87 @@ class PersonalNumber {
         final int len = this.input.length();
         switch (len) {
             case 10:
-                this.type.canBeSwedish = true;
-                addCenturyPrefix('-');
+                System.out.println("Length 10");
+                checkAndFix10('-');
                 break;
 
             case 11:
                 System.out.println("Length 11");
-                if(this.input.charAt(6) == '+') {
-                    System.out.println("found +");
-                    this.type.canBeSwedish = true;
-                    this.type.canBeCoordination = true;
+                if(this.input.charAt(6) == '+' || this.input.charAt(6) == '-' ) {
+                    char separator = this.input.charAt(6);
                     removeSeparator(6);
-                    addCenturyPrefix('+');
+                    checkAndFix10(separator);
                 }
-                else if(this.input.charAt(6) == '-') {
-                    this.type.canBeSwedish = true;
-                    this.type.canBeCoordination = true;
-                    removeSeparator(6);
-                    addCenturyPrefix('-');
-                }
+
                 else {
-                    this.type.canBeSwedish = false;
-                    this.type.canBeCoordination = false;
-                    Logger.cantBeSwedish();
-                    Logger.cantBeCoordination();
-                    Logger.cantBeOrganisation();
+                    invalidate(len);
 
                 }
-
                 break;
+
             case 12:
-                this.type.canBeSwedish = true;
-                this.type.canBeCoordination = true;
+                System.out.println("Length 12");
+                check12();
 
                 break;
             case 13:
+                System.out.println(13);
                 if(this.input.charAt(8) == '-') {
-                    this.type.canBeSwedish = true;
-                    this.type.canBeCoordination = true;
                     removeSeparator(8);
+                    check12();
                 }
+
                 else {
-                    Logger.checkLen(len);
+                    invalidate(len);
                 }
 
             default:
-                Logger.checkLen(len);
+                invalidate(len);
             }
         }
+
+
+    private void invalidate(int len) {
+        this.type.isInvalid = true;
+        Logger.invalidFormat(len);
+
+    }
+
+    private void checkAndFix10(char separator) {
+        if(onlyDigits()) {
+            this.type.canBeSwedish = true;
+            this.type.canBeCoordination = true;
+            addCenturyPrefix(separator);
+        }
+        else {
+            invalidate(this.input.length());
+        }
+
+    }
+
+    private void check12() {
+        if(onlyDigits()) {
+            this.type.canBeSwedish = true;
+            this.type.canBeCoordination = true;
+        }
+        else {
+            this.type.isInvalid = true;
+            Logger.invalidFormat(this.input.length());
+        }
+
+    }
+
+
+
+    boolean onlyDigits() {
+        for(int c = 0; c < this.fixed.length(); ++c) {
+            if(!Character.isDigit(this.fixed.charAt(c))){
+                return false;
+            }
+        }
+        return true;
+
+    }
 
 
     private void addCenturyPrefix(final char option) {
@@ -149,6 +179,7 @@ class PersonalNumber {
     }
 
     void parseBirthNumber() {
+        System.out.println(this.fixed);
         String birthNumber = this.fixed.substring(BIRTHNUMBER,CONTROLNUMBER);
         setBirthNumber(birthNumber);
     }

@@ -11,6 +11,7 @@ class ValidityChecker {
         this.pn.parseBirthDate();
         this.pn.parseBirthNumber();
         this.pn.parseControlNumber();
+
     }
 
    /* boolean isSwedish() {

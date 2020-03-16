@@ -1,11 +1,14 @@
 public class Logger {
 
-    static void checkLen(int len){      // throwing the exceptions
+    static void invalidFormat(int len){      // throwing the exceptions
 
         if (len < 10)
             System.out.println("A social security number must be at least 10 characters long.");
-        else if (len > 12)
-            System.out.println("A social security number must not be more than 12 characters long.");
+        else if (len > 13)
+            System.out.println("A social security number must not be more than 13 characters long.");
+        else {
+            System.out.println("Syntax error on given input");
+        }
 
     }
 
