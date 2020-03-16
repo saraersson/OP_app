@@ -93,7 +93,52 @@ public class PersonalNumberTest {
         assertFalse(vc.pn.type.isInvalid);
     }
 
+    @Test
+    public void invalid12_1() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("20000525-782"));
+        vc.narrowDownPossibilities();
 
+        assertTrue(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void invalid12_2() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2000052-78292"));
+        vc.narrowDownPossibilities();
+
+        assertTrue(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void invalidShort() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("950216782"));
+        vc.narrowDownPossibilities();
+
+        assertTrue(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void invalidLong_1() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("95021678229"));
+        vc.narrowDownPossibilities();
+
+        assertTrue(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void invalidLong_2() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("1995021678229"));
+        vc.narrowDownPossibilities();
+
+        assertTrue(vc.pn.type.isInvalid);
+    }
+    @Test
+    public void invalidLong_3() {
+        ValidityChecker vc = new ValidityChecker(new PersonalNumber("19950216782290"));
+        vc.narrowDownPossibilities();
+
+        assertTrue(vc.pn.type.isInvalid);
+    }
 
 
 }

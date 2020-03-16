@@ -8,9 +8,11 @@ class ValidityChecker {
 
     public void narrowDownPossibilities() {
         this.pn.parseFormat();
-        this.pn.parseBirthDate();
-        this.pn.parseBirthNumber();
-        this.pn.parseControlNumber();
+        if(!this.pn.type.isInvalid) {
+            this.pn.parseBirthDate();
+            this.pn.parseBirthNumber();
+            this.pn.parseControlNumber();
+        }
 
     }
 

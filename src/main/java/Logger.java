@@ -7,7 +7,7 @@ public class Logger {
         else if (len > 13)
             System.out.println("A social security number must not be more than 13 characters long.");
         else {
-            System.out.println("Syntax error on given input");
+            System.out.println("Invalid characters in given input.");
         }
 
     }

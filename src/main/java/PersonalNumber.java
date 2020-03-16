@@ -66,7 +66,7 @@ class PersonalNumber {
                 }
 
                 else {
-                    invalidate(len);
+                    invalidate();
 
                 }
                 break;
@@ -84,19 +84,19 @@ class PersonalNumber {
                 }
 
                 else {
-                    invalidate(len);
+                    invalidate();
                 }
                 break;
 
             default:
-                invalidate(len);
+                invalidate();
             }
         }
 
 
-    private void invalidate(int len) {
+    private void invalidate() {
         this.type.isInvalid = true;
-        Logger.invalidFormat(len);
+        Logger.invalidFormat(this.input.length());
 
     }
 
@@ -107,7 +107,7 @@ class PersonalNumber {
             addCenturyPrefix(separator);
         }
         else {
-            invalidate(this.input.length());
+            invalidate();
         }
 
     }
@@ -118,8 +118,7 @@ class PersonalNumber {
             this.type.canBeCoordination = true;
         }
         else {
-            this.type.isInvalid = true;
-            Logger.invalidFormat(this.input.length());
+            invalidate();
         }
 
     }
