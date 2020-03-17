@@ -3,10 +3,15 @@ import java.util.Calendar;
 class PersonalNumber {
     String input;
     String fixed;
+    private String prefix;
+    private String year;
+    private String month;
+    private String day;
     private String birthDate;
     private String birthNumber;
     private int controlNumber;
     Type type = new Type();
+    Logger logger;
 
 
 
@@ -15,6 +20,7 @@ class PersonalNumber {
     PersonalNumber(String pn) {
         this.input = pn;
         this.fixed = pn;
+        this.logger = new Logger(this);
     }
 
 
@@ -35,10 +41,12 @@ class PersonalNumber {
 
 
     void checkFormat() {
+        logger.startParsing();
         final int len = this.input.length();
         switch (len) {
             case 10:
                 check('/');
+                addCenturyPrefix('-');
                 break;
 
             case 11:
@@ -46,65 +54,67 @@ class PersonalNumber {
                     char separator = this.input.charAt(6);
                     removeSeparator(6);
                     check(separator);
+                    addCenturyPrefix(separator);
+                    logger.fixed(Character.toString(separator));
                 }
 
                 else {
-                    invalidate();
+                    invalidateFormat();
                 }
                 break;
 
             case 12:
                 if(validFormat()) {
                     removePrefix();
+                    logger.fixed(this.input.substring(0,2));
                 }
                 break;
 
             case 13:
                 if(this.input.charAt(8) == '-') {
                     removeSeparator(8);
+
                     if(validFormat()) {
                         removePrefix();
+                        logger.fixed(this.input.substring(0,2));
+                        logger.fixed("-");
                     }
                 }
                 else {
-                    invalidate();
+                    invalidateFormat();
                 }
                 break;
 
             default:
-                invalidate();
+                invalidateFormat();
             }
         }
 
 
-    private void invalidate() {
+    private void invalidateFormat() {
         this.type.isInvalid = true;
-        Logger.invalidFormat(this, this.input.length());
-
     }
 
 
     private void check(char separator) {
-        Logger.length(this.input.length());
+        logger.length();
         if(onlyDigits()) {
-            Logger.format(this,  separator);
+            logger.format(separator);
         }
         else {
-            invalidate();
+            invalidateFormat();
         }
-
-
     }
 
 
     private boolean validFormat() {
-        Logger.length(this.input.length());
+        logger.length();
         if(onlyDigits()) {
-            Logger.format(this);
+            logger.format();
             return true;
         }
         else {
-            invalidate();
+            invalidateFormat();
             return false;
         }
 
@@ -112,9 +122,47 @@ class PersonalNumber {
 
     private void removePrefix() {
         StringBuffer sb = new StringBuffer(this.fixed);
+        this.prefix = this.input.substring(0,2);
         this.fixed = sb.delete(0,2).toString();
 
     }
+
+    private void addCenturyPrefix(final char option) {
+        StringBuffer sb = new StringBuffer(this.fixed);
+        final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+        final int currentDate = Calendar.getInstance().get(Calendar.DATE);
+        final String currentPrefix = Integer.toString(currentYear).substring(0,2);
+        int possibleBirthYear = Integer.parseInt(currentPrefix + this.fixed.substring(0,2));
+        final int month = Integer.parseInt(this.fixed.substring(2,4));
+        final int date = Integer.parseInt(this.fixed.substring(4,6));
+        switch (option) {
+            case '+':
+                if(possibleBirthYear > currentYear) {
+                    possibleBirthYear -= 200;
+                }
+                else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
+                    possibleBirthYear -= 200;
+                }
+                else {
+                    possibleBirthYear -= 100;
+                }
+                break;
+            case '-':
+                if(possibleBirthYear > currentYear) {
+                    possibleBirthYear -= 100;
+                }
+                else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
+                    possibleBirthYear -= 100;
+                }
+                break;
+        }
+        final String prefix = Integer.toString(possibleBirthYear).substring(0,2);
+
+        this.prefix = prefix;
+    }
+
+
 
     private void removeSeparator(int index) {
         StringBuffer sb = new StringBuffer(this.fixed);
@@ -133,28 +181,15 @@ class PersonalNumber {
     }
 
 
-   /* private void addCenturyPrefix(final char option) {
-        StringBuffer sb = new StringBuffer(this.fixed);
-        final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        final int currentDate = Calendar.getInstance().get(Calendar.DATE);
-
-
-        final String currentPrefix = Integer.toString(currentYear).substring(0,2);
-        int possibleBirthYear = Integer.parseInt(currentPrefix + this.fixed.substring(0,2));
-        final int month = Integer.parseInt(this.fixed.substring(2,4));
-        final int date = Integer.parseInt(this.fixed.substring(4,6));
-
-
-        }
-        */
-
-
 
 
     void parseBirthDate() {
         String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
+        this.year = this.prefix + birthDate.substring(0,2);
+        this.month = birthDate.substring(2,4);
+        this.day = birthDate.substring(4,6);
         this.birthDate = birthDate;
+
     }
 
     void parseBirthNumber() {
@@ -165,6 +200,10 @@ class PersonalNumber {
     void parseControlNumber() {
         int controlNumber = Character.getNumericValue(this.fixed.charAt(ValidityChecker.CONTROLNUMBER));
         this.controlNumber = controlNumber;
+    }
+
+    String getDate() {
+        return this.day + "/" + this.month + "/" + this.year;
     }
 }
 

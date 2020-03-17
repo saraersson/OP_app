@@ -1,5 +1,13 @@
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
+
 import java.util.List;
+
+
 
 class ValidityChecker {
 
@@ -18,11 +26,12 @@ class ValidityChecker {
     boolean isValid() {
         this.pn.checkFormat();
         if(this.pn.type.isInvalid) {
+            this.pn.logger.invalidFormat();
             return false;
         }
         this.parseFormat();
 
-        if (this.isSwedish()) {
+        if (this.isRegular()) {
             return true;
         }
 
@@ -43,15 +52,32 @@ class ValidityChecker {
             this.pn.parseBirthDate();
             this.pn.parseBirthNumber();
             this.pn.parseControlNumber();
+            this.pn.logger.parsed();
     }
 
-    boolean isSwedish() {
+    boolean isRegular() {
+        pn.logger.isRegular();
         int luhns = calculateLuhns();
-        int date = Integer.valueOf(this.pn.getBirthDate().substring(BIRTHDATE + 4, BIRTHNUMBER));
-        if(date <= 31 && date >= 1 && luhns == this.pn.getControlNumber()) {
+      //  int date = Integer.valueOf(this.pn.getBirthDate().substring(BIRTHDATE + 4, BIRTHNUMBER));
+        String date = pn.getDate();
+        if(validDate(date) && luhns == this.pn.getControlNumber()) {
             return true;
         }
         return false;
+    }
+
+
+    private boolean validDate(String date) {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern ("dd/MM/uuuu");
+        f = f.withResolverStyle ( ResolverStyle.STRICT );
+        try {
+            LocalDate ld = LocalDate.parse (date , f );
+          //  System.out.println ( "ld: " + ld );
+            return true;
+        } catch ( DateTimeParseException e ) {
+           // System.out.println ( "ERROR: " + e );
+            return false;
+        }
     }
 
     private int calculateLuhns() {

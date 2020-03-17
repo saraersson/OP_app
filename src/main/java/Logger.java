@@ -1,50 +1,56 @@
 public class Logger {
 
-    static void invalidFormat(PersonalNumber pn, int len){      // throwing the exceptions
+    PersonalNumber pn;
+
+    Logger(PersonalNumber pn) {
+        this.pn = pn;
+
+    }
+
+
+    void startParsing() {
+        System.out.println("Beginning parsing of number: " + this.pn.input);
+    }
+
+    void startValidating() {
+        System.out.println("Beginning validity check on parsed number: " + this.pn.fixed);
+    }
+
+    void invalidFormat(){      // throwing the exceptions
+        int len = this.pn.input.length();
 
         if (len < 10)
-            System.out.println("A social security number must be at least 10 characters long.");
+            System.out.println(this.pn.input + " is not a Swedish social security number: a social security number must be at least 10 characters long.");
         else if (len > 13)
-            System.out.println("A social security number must not be more than 13 characters long.");
+            System.out.println(this.pn.input + " is not a Swedish social security number: A social security number must not be more than 13 characters long.");
         else {
-            System.out.println("Invalid characters in given input: " + pn.input);
+            System.out.println(this.pn.input + " is not a Swedish social security number: invalid characters in given input");
         }
 
     }
 
-    static void printResult(PersonalNumber pn) {
-        System.out.println("The input given is a valid blabla");
+    void printResult() {
+        System.out.println("The input given is a valid Swedish social security number");
     }
 
-    static void cantBeSwedish() {
-        System.out.println("The input given is not a Swedish social security number.");
+
+    void length() {
+        System.out.println("The length of " + this.pn.input +" is between 10 and 13.");
     }
 
-    static void cantBeCoordination() {
-        System.out.println("The input given is not a coordination nr.");
-    }
-
-    static void cantBeOrganisation() {
-        System.out.println("The input given is not an organisation nr.");
-    }
-
-    static void length(int len) {
-        System.out.println("The length " + " of the input is between 10 and 13.");
-    }
-
-    static void format(PersonalNumber pn) {
-        switch(pn.input.length()) {
+    void format() {
+        switch(this.pn.input.length()) {
             case 10:
-                System.out.println(pn.input + ": The given input is in the format YYMMDDXXXX");
+                System.out.println("The given input " + this.pn.input + " is in the format YYMMDDXXXX");
                 break;
             case 11:
-                System.out.println(pn.input + ": The given input is in the format YYMMDD-XXXX");
+                System.out.println("The given input " + this.pn.input + " is in the format YYMMDD-XXXX");
                 break;
             case 12:
-                System.out.println(pn.input + ": The given input is in the format YYYYMMDDXXXX");
+                System.out.println("The given input " + this.pn.input + " is in the format YYYYMMDDXXXX");
                 break;
             case 13:
-                System.out.println(pn.input + ": The given input is in the format YYYYMMDD-XXXX");
+                System.out.println("The given input " + this.pn.input + " is in the format YYYYMMDD-XXXX");
                 break;
             default:
                 System.out.println("No idea...");
@@ -52,17 +58,36 @@ public class Logger {
 
     }
 
-    static void format(PersonalNumber pn, char separator) {
+    void format(char separator) {
         if (separator == '/') {
-            System.out.println(pn.input + ": The given input is in the format YYMMDDXXXX");
+            System.out.println("The given input " + this.pn.input + " is in the format YYMMDDXXXX");
         }
         else {
-            System.out.println(pn.input + ": The given input is in the format YYMMDD" + separator + "XXXX");
+            System.out.println("The given input " + this.pn.input + " is in the format YYMMDD" + separator + "XXXX");
         }
 
 
     }
 
+    void fixed(String noise) {
+        System.out.println("Removed \"" + noise + "\" from input");
+    }
 
+    void parsed() {
+        System.out.println("Parsing result: " + this.pn.input + " --> " + this.pn.fixed);
+        System.out.println();
+    }
+
+    void isRegular() {
+        System.out.println("Checking if " + this.pn.fixed + " is a valid regular number");
+    }
+
+    void valid() {
+        System.out.println(this.pn.fixed + " is a valid social security number");
+    }
+
+    void invalid() {
+        System.out.println(this.pn.fixed + " is NOT a valid social security number");
+    }
 }
 
