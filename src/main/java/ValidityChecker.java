@@ -2,26 +2,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ValidityChecker {
+
     PersonalNumber pn;
 
-    ValidityChecker(PersonalNumber pn) {
-        this.pn = pn;
+    static int BIRTHDATE = 0;
+    static int COORDINATION = 9;
+    static int BIRTHNUMBER = 6;
+    static int CONTROLNUMBER = 9;
+
+    ValidityChecker(String input) {
+        this.pn = new PersonalNumber(input);
     }
 
 
-    void validateFormat() {
-        this.pn.parseFormat();
-        if(!this.pn.type.isInvalid) {
+    boolean isValid() {
+        this.pn.checkFormat();
+        if(this.pn.type.isInvalid) {
+            return false;
+        }
+        this.parseFormat();
+
+        if (this.isSwedish()) {
+            return true;
+        }
+
+     /*   if(vc.isCoordination()) {
+            return true;
+        }
+
+        if(vc.isOrganisation()) {
+            return true;
+        }
+        */
+        return false;
+
+    }
+
+
+    void parseFormat() {
             this.pn.parseBirthDate();
             this.pn.parseBirthNumber();
             this.pn.parseControlNumber();
-        }
-
     }
 
     boolean isSwedish() {
         int luhns = calculateLuhns();
-        return true;
+        int date = Integer.valueOf(this.pn.getBirthDate().substring(BIRTHDATE + 4, BIRTHNUMBER));
+        if(date <= 31 && date >= 1 && luhns == this.pn.getControlNumber()) {
+            return true;
+        }
+        return false;
     }
 
     private int calculateLuhns() {
@@ -76,6 +106,8 @@ class ValidityChecker {
 
         return true;
     }*/
+
+
 
 
 }

@@ -9,10 +9,7 @@ class PersonalNumber {
     Type type = new Type();
 
 
-    private static int BIRTHDATE = 0;
-    static int COORDINATION = 9;
-    private static int BIRTHNUMBER = 6;
-    private static int CONTROLNUMBER = 9;
+
 
 
     PersonalNumber(String pn) {
@@ -37,7 +34,7 @@ class PersonalNumber {
 
 
 
-    void parseFormat() {
+    void checkFormat() {
         final int len = this.input.length();
         switch (len) {
             case 10:
@@ -114,10 +111,8 @@ class PersonalNumber {
     }
 
     private void removePrefix() {
-        System.out.println(this.fixed);
         StringBuffer sb = new StringBuffer(this.fixed);
         this.fixed = sb.delete(0,2).toString();
-        System.out.println(this.fixed);
 
     }
 
@@ -158,17 +153,17 @@ class PersonalNumber {
 
 
     void parseBirthDate() {
-        String birthDate = this.fixed.substring(BIRTHDATE,BIRTHNUMBER);
+        String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
         this.birthDate = birthDate;
     }
 
     void parseBirthNumber() {
-        String birthNumber = this.fixed.substring(BIRTHNUMBER,CONTROLNUMBER);
+        String birthNumber = this.fixed.substring(ValidityChecker.BIRTHNUMBER,ValidityChecker.CONTROLNUMBER);
         this.birthNumber = birthNumber;
     }
 
     void parseControlNumber() {
-        int controlNumber = Character.getNumericValue(this.fixed.charAt(CONTROLNUMBER));
+        int controlNumber = Character.getNumericValue(this.fixed.charAt(ValidityChecker.CONTROLNUMBER));
         this.controlNumber = controlNumber;
     }
 }

@@ -7,70 +7,61 @@ public class PersonalNumberTest {
 
     // parsing tests
     @Test
-    public void legit10_1() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("0002167829"));
-        vc.validateFormat();
+    public void legitSwedish_1() {
+        ValidityChecker vc = new ValidityChecker("0005254776");
+        vc.isValid();
 
-        assertEquals(vc.pn.fixed,"0002167829");
-        assertEquals(vc.pn.getBirthDate(),"000216");
-        assertEquals(vc.pn.getBirthNumber(),"782");
-        assertEquals(vc.pn.getControlNumber(),9);
+        assertEquals(vc.pn.fixed,"0005254776");
+        assertEquals(vc.pn.getBirthDate(),"000525");
+        assertEquals(vc.pn.getBirthNumber(),"477");
+        assertEquals(vc.pn.getControlNumber(),6);
         assertFalse(vc.pn.type.isInvalid);
+        assertTrue(vc.isSwedish());
     }
-
+/*
     @Test
-    public void legit10_2() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("9502167829"));
-        vc.validateFormat();
+    public void legitSwedish_2() {
+        ValidityChecker vc = new ValidityChecker("9502167829");
+        vc.isValid();
 
         assertEquals(vc.pn.fixed,"9502167829");
         assertEquals(vc.pn.getBirthDate(),"950216");
         assertEquals(vc.pn.getBirthNumber(),"782");
         assertEquals(vc.pn.getControlNumber(), 9);
         assertFalse(vc.pn.type.isInvalid);
+        assertTrue(vc.isSwedish());
     }
 
 
     @Test
-    public void legit10_3() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2001167829"));
-        vc.validateFormat();
+    public void legitSwedish_3() {
+        ValidityChecker vc = new ValidityChecker("9402122429");
+        vc.isValid();
 
-        assertEquals(vc.pn.fixed,"2001167829");
-        assertEquals(vc.pn.getBirthDate(),"200116");
-        assertEquals(vc.pn.getBirthNumber(),"782");
+        assertEquals(vc.pn.fixed,"9402122429");
+        assertEquals(vc.pn.getBirthDate(),"940212");
+        assertEquals(vc.pn.getBirthNumber(),"242");
         assertEquals(vc.pn.getControlNumber(), 9);
         assertFalse(vc.pn.type.isInvalid);
+        assertTrue(vc.isSwedish());
     }
 
     @Test
-    public void legit10_4() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2005167829"));
-        vc.validateFormat();
+    public void legitSwedishPlus_1() {
+        ValidityChecker vc = new ValidityChecker("000525+4776");
+        vc.isValid();
 
-        assertEquals(vc.pn.fixed,"2005167829");
-        assertEquals(vc.pn.getBirthDate(),"200516");
-        assertEquals(vc.pn.getBirthNumber(),"782");
-        assertEquals(vc.pn.getControlNumber(), 9);
+        assertEquals(vc.pn.fixed,"0005254776");
+        assertEquals(vc.pn.getBirthDate(),"000525");
+        assertEquals(vc.pn.getBirthNumber(),"477");
+        assertEquals(vc.pn.getControlNumber(),6);
         assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
-    public void legit11Plus_1() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("000216+7829"));
-        vc.validateFormat();
-
-        assertEquals(vc.pn.fixed,"0002167829");
-        assertEquals(vc.pn.getBirthDate(),"000216");
-        assertEquals(vc.pn.getBirthNumber(),"782");
-        assertEquals(vc.pn.getControlNumber(),9);
-        assertFalse(vc.pn.type.isInvalid);
-    }
-
-    @Test
-    public void legit11Plus_2() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("950216+7829"));
-        vc.validateFormat();
+    public void legitSwedishPlus_2() {
+        ValidityChecker vc = new ValidityChecker("950216+7829");
+        vc.isValid();
 
         assertEquals(vc.pn.fixed,"9502167829");
         assertEquals(vc.pn.getBirthDate(),"950216");
@@ -79,36 +70,37 @@ public class PersonalNumberTest {
         assertFalse(vc.pn.type.isInvalid);
     }
 
-    @Test
-    public void legit11Plus_3() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("200116+7829"));
-        vc.validateFormat();
 
-        assertEquals(vc.pn.fixed,"2001167829");
-        assertEquals(vc.pn.getBirthDate(),"200116");
-        assertEquals(vc.pn.getBirthNumber(),"782");
+    @Test
+    public void legitSwedishMinus_1() {
+        ValidityChecker vc = new ValidityChecker("000525-4776");
+        vc.isValid();
+
+        assertEquals(vc.pn.fixed,"0005254776");
+        assertEquals(vc.pn.getBirthDate(),"000525");
+        assertEquals(vc.pn.getBirthNumber(),"477");
+        assertEquals(vc.pn.getControlNumber(),6);
+        assertFalse(vc.pn.type.isInvalid);
+    }
+
+    @Test
+    public void legitSwedishMinus_2() {
+        ValidityChecker vc = new ValidityChecker("940212-2429");
+        vc.isValid();
+
+        assertEquals(vc.pn.fixed,"9402122429");
+        assertEquals(vc.pn.getBirthDate(),"940212");
+        assertEquals(vc.pn.getBirthNumber(),"242");
         assertEquals(vc.pn.getControlNumber(), 9);
         assertFalse(vc.pn.type.isInvalid);
+        assertTrue(vc.isSwedish());
     }
-
-    @Test
-    public void legit11Minus_1() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("890216-7829"));
-        vc.validateFormat();
-
-        assertEquals(vc.pn.fixed,"8902167829");
-        assertEquals(vc.pn.getBirthDate(),"890216");
-        assertEquals(vc.pn.getBirthNumber(),"782");
-        assertEquals(vc.pn.getControlNumber(),9);
-        assertFalse(vc.pn.type.isInvalid);
-    }
-
 
 
     @Test
     public void legit12() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("199502167829"));
-        vc.validateFormat();
+        ValidityChecker vc = new ValidityChecker("199502167829");
+        vc.isValid();
 
         assertEquals(vc.pn.fixed,"9502167829");
         assertEquals(vc.pn.getBirthDate(),"950216");
@@ -120,62 +112,54 @@ public class PersonalNumberTest {
 
     @Test
     public void legit13() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("20000525-7829"));
-        vc.validateFormat();
+        ValidityChecker vc = new ValidityChecker("20000525-4776");
+        vc.isValid();
 
-        assertEquals(vc.pn.fixed,"0005257829");
+        assertEquals(vc.pn.fixed,"0005254776");
         assertEquals(vc.pn.getBirthDate(),"000525");
-        assertEquals(vc.pn.getBirthNumber(),"782");
-        assertEquals(vc.pn.getControlNumber(), 9);
+        assertEquals(vc.pn.getBirthNumber(),"477");
+        assertEquals(vc.pn.getControlNumber(),6);
         assertFalse(vc.pn.type.isInvalid);
     }
 
     @Test
-    public void invalid12_1() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("20000525-782"));
-        vc.validateFormat();
+    public void invalidFormat_1() {
+        ValidityChecker vc = new ValidityChecker("20000525-782");
+        vc.pn.checkFormat();
+        assertTrue(vc.pn.type.isInvalid);
 
+    }
+
+    @Test
+    public void invalidFormat_2() {
+        ValidityChecker vc = new ValidityChecker("2000052-78292");
+        vc.pn.checkFormat();
+        assertTrue(vc.pn.type.isInvalid);
+
+    }
+
+    @Test
+    public void invalidFormat_3() {
+        ValidityChecker vc = new ValidityChecker("950216782");
+                vc.pn.checkFormat();
+        assertTrue(vc.pn.type.isInvalid);
+
+    }
+
+    @Test
+    public void invalidFormat_4() {
+        ValidityChecker vc = new ValidityChecker("95021678229");
+        vc.pn.checkFormat();
         assertTrue(vc.pn.type.isInvalid);
     }
 
     @Test
-    public void invalid12_2() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("2000052-78292"));
-        vc.validateFormat();
-
+    public void invalidFormat_5() {
+        ValidityChecker vc = new ValidityChecker("1995021678229");
+        vc.pn.checkFormat();
         assertTrue(vc.pn.type.isInvalid);
-    }
 
-    @Test
-    public void invalidShort() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("950216782"));
-        vc.validateFormat();
-
-        assertTrue(vc.pn.type.isInvalid);
-    }
-
-    @Test
-    public void invalidLong_1() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("95021678229"));
-        vc.validateFormat();
-
-        assertTrue(vc.pn.type.isInvalid);
-    }
-
-    @Test
-    public void invalidLong_2() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("1995021678229"));
-        vc.validateFormat();
-
-        assertTrue(vc.pn.type.isInvalid);
-    }
-    @Test
-    public void invalidLong_3() {
-        ValidityChecker vc = new ValidityChecker(new PersonalNumber("19950216782290"));
-        vc.validateFormat();
-
-        assertTrue(vc.pn.type.isInvalid);
-    }
+    }*/
 
 
 }
