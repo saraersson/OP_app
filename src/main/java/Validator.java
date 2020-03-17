@@ -17,28 +17,27 @@ class Validator {
 
         ValidityChecker vc = new ValidityChecker(this.pn);
 
-        vc.narrowDownPossibilities();
-        if(this.pn.type.isInvalid) {
+        vc.validateFormat();
+        if (this.pn.type.isInvalid) {
             return false;
         }
-        else return true;
-       /* if(this.pn.type.canBeSwedish) {
-            System.out.println("Could be Swedish");
-           /* if (vc.isSwedish()) {
-                return true;
-            }*/
-       /* }/*
-        else if(vc.isCoordination(this.pn)) {
+
+
+        if (vc.isSwedish()) {
             return true;
         }
-        else if(vc.isOrganisation(this.pn)) {
+
+     /*   if(vc.isCoordination()) {
+            return true;
+        }
+
+        if(vc.isOrganisation()) {
             return true;
         }
         */
+        return false;
 
     }
-
-
 
 
 
