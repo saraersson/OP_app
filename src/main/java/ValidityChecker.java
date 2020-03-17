@@ -31,14 +31,23 @@ class ValidityChecker {
         }
         this.parseFormat();
 
-        if (this.isRegular()) {
+        int luhns = calculateLuhns();
+        if (this.isRegular(luhns)) {
+            pn.logger.isRegular(true);
             return true;
         }
-
-     /*   if(vc.isCoordination()) {
-            return true;
+        else {
+            pn.logger.isRegular(false);
         }
 
+        if(this.isCoordination(luhns)) {
+            pn.logger.isCoordination(true);
+            return true;
+        }
+        else {
+            pn.logger.isCoordination(false);
+        }
+/*
         if(vc.isOrganisation()) {
             return true;
         }
@@ -55,27 +64,32 @@ class ValidityChecker {
             this.pn.logger.parsed();
     }
 
-    boolean isRegular() {
+    boolean isRegular(int luhns) {
         pn.logger.isRegular();
-        int luhns = calculateLuhns();
-      //  int date = Integer.valueOf(this.pn.getBirthDate().substring(BIRTHDATE + 4, BIRTHNUMBER));
-        String date = pn.getDate();
-        if(validDate(date) && luhns == this.pn.getControlNumber()) {
-            return true;
+
+        T_Date date = pn.getDate();
+        if(isValidDate(date)) {
+            pn.logger.date(true);
+            if(luhns == this.pn.getControlNumber()) {
+                pn.logger.luhns(luhns, true);
+                pn.type.isRegular = true;
+                return true;
+            }
+            pn.logger.luhns(luhns, false);
         }
+        pn.logger.date(false);
         return false;
     }
 
 
-    private boolean validDate(String date) {
+    private boolean isValidDate(T_Date dateToCheck) {
+        String date = dateToCheck.day + "/" + dateToCheck.month + "/" + dateToCheck.year;
         DateTimeFormatter f = DateTimeFormatter.ofPattern ("dd/MM/uuuu");
         f = f.withResolverStyle ( ResolverStyle.STRICT );
         try {
-            LocalDate ld = LocalDate.parse (date , f );
-          //  System.out.println ( "ld: " + ld );
+            LocalDate.parse (date , f );
             return true;
         } catch ( DateTimeParseException e ) {
-           // System.out.println ( "ERROR: " + e );
             return false;
         }
     }
@@ -88,9 +102,6 @@ class ValidityChecker {
                 char a = this.pn.fixed.charAt(c);
                 int aValue = Character.getNumericValue(a) * 2;
                 value = Integer.toString(aValue);
-
-
-
             }
             else {
                 char a = this.pn.fixed.charAt(c);
@@ -107,11 +118,9 @@ class ValidityChecker {
             finalResult += (Integer) value;
         }
 
-        // skriv modulon babe
         finalResult = ( 10 - (finalResult % 10) ) % 10;
 
         return finalResult;
-
     }
 
     private boolean isEven(int c) {
@@ -119,15 +128,31 @@ class ValidityChecker {
     }
 
 
-  /*  boolean isCoordination() {
+    boolean isCoordination(int luhns) {
+        pn.logger.isCoordination();
+        T_Date date = pn.getDate();
+        int coordValue = Integer.valueOf(pn.getDate().day);
 
-        int coordValue = Character.getNumericValue(pn.input.charAt(pn.COORDINATION));
         if(coordValue >= 61 && coordValue <= 91) {
-            return true;
+            String underLyingDate = Integer.toString(coordValue - 60);
+            date.day = underLyingDate;
+
+            if(isValidDate(date)) {
+                pn.logger.date(true);
+                if(luhns == this.pn.getControlNumber()) {
+                    pn.logger.luhns(luhns, true);
+                    pn.type.isCoordination = true;
+                    return true;
+                }
+                else {
+                    pn.logger.luhns(luhns, false);
+                }
+            }
+            pn.logger.date(false);
         }
-
+        return false;
     }
-
+/*
     boolean isOrganisation() {
 
         return true;

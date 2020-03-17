@@ -4,13 +4,14 @@ class PersonalNumber {
     String input;
     String fixed;
     private String prefix;
-    private String year;
-    private String month;
-    private String day;
+
+
     private String birthDate;
     private String birthNumber;
     private int controlNumber;
+
     Type type = new Type();
+    private T_Date date;
     Logger logger;
 
 
@@ -21,6 +22,7 @@ class PersonalNumber {
         this.input = pn;
         this.fixed = pn;
         this.logger = new Logger(this);
+        this.date = new T_Date();
     }
 
 
@@ -185,9 +187,9 @@ class PersonalNumber {
 
     void parseBirthDate() {
         String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
-        this.year = this.prefix + birthDate.substring(0,2);
-        this.month = birthDate.substring(2,4);
-        this.day = birthDate.substring(4,6);
+        this.date.year = this.prefix + birthDate.substring(0,2);
+        this.date.month = birthDate.substring(2,4);
+        this.date.day = birthDate.substring(4,6);
         this.birthDate = birthDate;
 
     }
@@ -202,8 +204,8 @@ class PersonalNumber {
         this.controlNumber = controlNumber;
     }
 
-    String getDate() {
-        return this.day + "/" + this.month + "/" + this.year;
+    T_Date getDate() {
+        return this.date;
     }
 }
 

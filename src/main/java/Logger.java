@@ -82,12 +82,56 @@ public class Logger {
         System.out.println("Checking if " + this.pn.fixed + " is a valid regular number");
     }
 
+    void isRegular(boolean valid) {
+        if(valid) {
+            System.out.println(this.pn.fixed + " is a valid regular number");
+        }
+        else {
+            System.out.println(this.pn.fixed + " is NOT a regular number");
+            System.out.println();
+        }
+    }
+
     void valid() {
         System.out.println(this.pn.fixed + " is a valid social security number");
     }
 
     void invalid() {
         System.out.println(this.pn.fixed + " is NOT a valid social security number");
+        System.out.println();
+    }
+
+    void isCoordination() {
+        System.out.println("Checking if " + this.pn.fixed + " is a valid coordination number");
+    }
+
+    void isCoordination(boolean valid) {
+        if(valid) {
+            System.out.println(this.pn.fixed + " is a valid coordination number");
+            System.out.println();
+        }
+        else {
+            System.out.println(this.pn.fixed + " is NOT a valid coordination number");
+            System.out.println();
+        }
+    }
+
+    void luhns(int luhns, boolean matches) {
+        if(matches) {
+            System.out.println("The calculated control number (" + luhns + ") of " + this.pn.fixed + " matches given control number (" + this.pn.getControlNumber() + ")");
+        }
+        else {
+            System.out.println("The calculated control number (" + luhns + ") of " + this.pn.fixed + " DOES not match given control number (" + this.pn.getControlNumber() + ")");
+        }
+    }
+
+    void date(boolean valid) {
+        if(valid) {
+            System.out.println("The date of " + this.pn.fixed + " is valid");
+        }
+        else {
+            System.out.println("The date of " + this.pn.fixed + " is NOT valid");
+        }
     }
 }
 
