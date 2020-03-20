@@ -1,3 +1,5 @@
+package com.omegapoint;
+
 import java.util.Calendar;
 
 class PersonalNumber {
@@ -183,7 +185,7 @@ class PersonalNumber {
     }
 
     void parseBirthDate() {
-        final String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
+        final String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE, ValidityChecker.BIRTHNUMBER);
         this.date.year = this.prefix + birthDate.substring(0,2);
         this.date.month = birthDate.substring(2,4);
         this.date.day = birthDate.substring(4,6);

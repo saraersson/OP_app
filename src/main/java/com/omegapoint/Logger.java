@@ -1,3 +1,5 @@
+package com.omegapoint;
+
 class Logger {
 
     PersonalNumber pn;

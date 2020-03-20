@@ -1,3 +1,5 @@
+package com.omegapoint;
+
 class Type {
     boolean isInvalid = false;
     boolean isRegular = false;
