@@ -101,7 +101,7 @@ class PersonalNumber {
     }
 
 
-    private void check(char separator) {
+    private void check(final char separator) {
         logger.length();
         if(onlyDigits()) {
             logger.format(separator);
@@ -169,7 +169,7 @@ class PersonalNumber {
 
 
 
-    private void removeSeparator(int index) {
+    private void removeSeparator(final int index) {
         StringBuffer sb = new StringBuffer(this.fixed);
         this.fixed = sb.deleteCharAt(index).toString();
     }
@@ -189,7 +189,7 @@ class PersonalNumber {
 
 
     void parseBirthDate() {
-        String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
+        final String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
         this.date.year = this.prefix + birthDate.substring(0,2);
         this.date.month = birthDate.substring(2,4);
         this.date.day = birthDate.substring(4,6);
@@ -198,12 +198,12 @@ class PersonalNumber {
     }
 
     void parseBirthNumber() {
-        String birthNumber = this.fixed.substring(ValidityChecker.BIRTHNUMBER,ValidityChecker.CONTROLNUMBER);
+        final String birthNumber = this.fixed.substring(ValidityChecker.BIRTHNUMBER,ValidityChecker.CONTROLNUMBER);
         this.birthNumber = birthNumber;
     }
 
     void parseControlNumber() {
-        int controlNumber = Character.getNumericValue(this.fixed.charAt(ValidityChecker.CONTROLNUMBER));
+        final int controlNumber = Character.getNumericValue(this.fixed.charAt(ValidityChecker.CONTROLNUMBER));
         this.controlNumber = controlNumber;
     }
 

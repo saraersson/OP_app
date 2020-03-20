@@ -5,14 +5,14 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        final Scanner in = new Scanner(System.in);
         System.out.println("Enter a social security number to validate...");
 
         while(in.hasNext()) {
-            String input = in.nextLine();
+            final String input = in.nextLine();
             System.out.println("Number to validate: " + input);
             System.out.println();
-            ValidityChecker checker = new ValidityChecker(input);
+            final ValidityChecker checker = new ValidityChecker(input);
             
             if(checker.isValid()) {
                 checker.pn.logger.valid(true);

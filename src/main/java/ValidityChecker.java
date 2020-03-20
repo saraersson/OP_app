@@ -13,12 +13,12 @@ class ValidityChecker {
 
     PersonalNumber pn;
 
-    static int BIRTHDATE = 0;
-    static int COORDINATION = 9;
-    static int BIRTHNUMBER = 6;
-    static int CONTROLNUMBER = 9;
+    final static int BIRTHDATE = 0;
+    final static int COORDINATION = 9;
+    final static int BIRTHNUMBER = 6;
+    final static int CONTROLNUMBER = 9;
 
-    ValidityChecker(String input) {
+    ValidityChecker(final String input) {
         this.pn = new PersonalNumber(input);
     }
 
@@ -32,7 +32,7 @@ class ValidityChecker {
         this.parseFormat();
         this.pn.logger.start("validating");
 
-        int luhns = calculateLuhns();
+        final int luhns = calculateLuhns();
         if (this.isRegular(luhns)) {
             pn.logger.isRegular(true);
             return true;
@@ -68,7 +68,7 @@ class ValidityChecker {
             this.pn.logger.parsed();
     }
 
-    boolean isRegular(int luhns) {
+    boolean isRegular(final int luhns) {
         pn.logger.isType("regular");
 
         T_Date date = pn.getDate();
@@ -86,7 +86,7 @@ class ValidityChecker {
     }
 
 
-    private boolean isValidDate(T_Date dateToCheck) {
+    private boolean isValidDate(final T_Date dateToCheck) {
         String date = dateToCheck.day + "/" + dateToCheck.month + "/" + dateToCheck.year;
         DateTimeFormatter f = DateTimeFormatter.ofPattern ("dd/MM/uuuu");
         f = f.withResolverStyle ( ResolverStyle.STRICT );
@@ -103,13 +103,13 @@ class ValidityChecker {
         for(int c = 0; c < this.pn.fixed.length()-1; ++c) {
             String value;
             if(isEven(c)) {
-                char a = this.pn.fixed.charAt(c);
-                int aValue = Character.getNumericValue(a) * 2;
+                final char a = this.pn.fixed.charAt(c);
+                final int aValue = Character.getNumericValue(a) * 2;
                 value = Integer.toString(aValue);
             }
             else {
-                char a = this.pn.fixed.charAt(c);
-                int aValue = Character.getNumericValue(a);
+                final char a = this.pn.fixed.charAt(c);
+                final int aValue = Character.getNumericValue(a);
                 value = Integer.toString(aValue);
             }
 
@@ -118,7 +118,7 @@ class ValidityChecker {
             }
         }
         int finalResult = 0;
-        for(Object value: result) {
+        for(final Object value: result) {
             finalResult += (Integer) value;
         }
 
@@ -127,14 +127,14 @@ class ValidityChecker {
         return finalResult;
     }
 
-    private boolean isEven(int c) {
+    private boolean isEven(final int c) {
         return ((c/2)*2 == c);
     }
 
 
-    boolean isCoordination(int luhns) {
+    boolean isCoordination(final int luhns) {
         pn.logger.isType("coordination");
-        T_Date date = pn.getDate();
+        final T_Date date = pn.getDate();
         int coordValue = Integer.valueOf(pn.getDate().day);
 
         if(coordValue >= 61 && coordValue <= 91) {
@@ -160,7 +160,7 @@ class ValidityChecker {
         return false;
     }
 
-    boolean isOrganisation(int luhns) {
+    boolean isOrganisation(final int luhns) {
         pn.logger.isType("organisation");
         if(this.pn.getPrefix().equals("16") || this.pn.input.length() == 11) {
             this.pn.logger.prefixOrLength(true);
