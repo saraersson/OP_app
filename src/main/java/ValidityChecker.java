@@ -30,6 +30,7 @@ class ValidityChecker {
             return false;
         }
         this.parseFormat();
+        this.pn.logger.startValidating();
 
         int luhns = calculateLuhns();
         if (this.isRegular(luhns)) {
@@ -47,11 +48,14 @@ class ValidityChecker {
         else {
             pn.logger.isCoordination(false);
         }
-/*
-        if(vc.isOrganisation()) {
+
+        if(this.isOrganisation(luhns)) {
+            pn.logger.isOrganisation(true);
             return true;
         }
-        */
+        else {
+            pn.logger.isOrganisation(false);
+        }
         return false;
 
     }
@@ -65,7 +69,7 @@ class ValidityChecker {
     }
 
     boolean isRegular(int luhns) {
-        pn.logger.isRegular();
+        pn.logger.isType("regular");
 
         T_Date date = pn.getDate();
         if(isValidDate(date)) {
@@ -129,7 +133,7 @@ class ValidityChecker {
 
 
     boolean isCoordination(int luhns) {
-        pn.logger.isCoordination();
+        pn.logger.isType("coordination");
         T_Date date = pn.getDate();
         int coordValue = Integer.valueOf(pn.getDate().day);
 
@@ -152,11 +156,24 @@ class ValidityChecker {
         }
         return false;
     }
-/*
-    boolean isOrganisation() {
+
+    boolean isOrganisation(int luhns) {
+        pn.logger.isType("organisation");
+        if(this.pn.getPrefix() == "16" || this.pn.input.length() == 11) {
+            this.pn.logger.prefixOrLength(true);
+            if(luhns == this.pn.getControlNumber()) {
+                pn.logger.luhns(luhns, true);
+                pn.type.isOrganisation = true;
+                return true;
+            }
+        }
+        else {
+            this.pn.logger.prefixOrLength(false);
+        }
+
 
         return true;
-    }*/
+    }
 
 
 

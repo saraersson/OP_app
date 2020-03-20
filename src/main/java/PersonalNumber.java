@@ -39,6 +39,9 @@ class PersonalNumber {
         return this.controlNumber;
     }
 
+    String getPrefix() {
+        return this.prefix;
+    }
 
 
 
