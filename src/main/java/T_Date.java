@@ -1,4 +1,4 @@
-public class T_Date {
+class T_Date {
     String year;
     String month;
     String day;

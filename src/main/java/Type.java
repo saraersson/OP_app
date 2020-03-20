@@ -1,4 +1,4 @@
-public class Type {
+class Type {
     boolean isInvalid = false;
     boolean isRegular = false;
     boolean isCoordination = false;

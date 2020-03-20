@@ -25,69 +25,68 @@ class ValidityChecker {
 
     boolean isValid() {
         this.pn.checkFormat();
-        if(this.pn.type.isInvalid) {
-            this.pn.logger.invalidFormat();
+        if(this.pn.getType().isInvalid) {
+            this.pn.getLogger().invalidFormat();
             return false;
         }
         this.parseFormat();
-        this.pn.logger.start("validating");
+        this.pn.getLogger().start("validating");
 
         final int luhns = calculateLuhns();
         if (this.isRegular(luhns)) {
-            pn.logger.isRegular(true);
+            pn.getLogger().isRegular(true);
             return true;
         }
         else {
-            pn.logger.isRegular(false);
+            pn.getLogger().isRegular(false);
         }
 
         if(this.isCoordination(luhns)) {
-            pn.logger.isCoordination(true);
+            pn.getLogger().isCoordination(true);
             return true;
         }
         else {
-            pn.logger.isCoordination(false);
+            pn.getLogger().isCoordination(false);
         }
 
         if(this.isOrganisation(luhns)) {
-            pn.logger.isOrganisation(true);
+            pn.getLogger().isOrganisation(true);
             return true;
         }
         else {
-            pn.logger.isOrganisation(false);
+            pn.getLogger().isOrganisation(false);
         }
         return false;
 
     }
 
 
-    void parseFormat() {
+    private void parseFormat() {
             this.pn.parseBirthDate();
-            this.pn.parseBirthNumber();
             this.pn.parseControlNumber();
-            this.pn.logger.parsed();
+            this.pn.getLogger().parsed();
     }
 
-    boolean isRegular(final int luhns) {
-        pn.logger.isType("regular");
+   private boolean isRegular(final int luhns) {
+        pn.getLogger().isType("regular");
 
-        T_Date date = pn.getDate();
+        final T_Date date = pn.getDate();
         if(isValidDate(date)) {
-            pn.logger.date(true);
+            pn.getLogger().date(true);
             if(luhns == this.pn.getControlNumber()) {
-                pn.logger.luhns(luhns, true);
-                pn.type.isRegular = true;
+                pn.getLogger().luhns(luhns, true);
+                pn.getType().isRegular = true;
                 return true;
             }
-            pn.logger.luhns(luhns, false);
+            pn.getLogger().luhns(luhns, false);
+            return false;
         }
-        pn.logger.date(false);
+        pn.getLogger().date(false);
         return false;
     }
 
-
     private boolean isValidDate(final T_Date dateToCheck) {
-        String date = dateToCheck.day + "/" + dateToCheck.month + "/" + dateToCheck.year;
+        final String date = dateToCheck.day + "/" + dateToCheck.month + "/" + dateToCheck.year;
         DateTimeFormatter f = DateTimeFormatter.ofPattern ("dd/MM/uuuu");
         f = f.withResolverStyle ( ResolverStyle.STRICT );
         try {
@@ -100,15 +99,15 @@ class ValidityChecker {
 
     private int calculateLuhns() {
         List result = new ArrayList();
-        for(int c = 0; c < this.pn.fixed.length()-1; ++c) {
+        for(int c = 0; c < this.pn.getFixed().length()-1; ++c) {
             String value;
             if(isEven(c)) {
-                final char a = this.pn.fixed.charAt(c);
+                final char a = this.pn.getFixed().charAt(c);
                 final int aValue = Character.getNumericValue(a) * 2;
                 value = Integer.toString(aValue);
             }
             else {
-                final char a = this.pn.fixed.charAt(c);
+                final char a = this.pn.getFixed().charAt(c);
                 final int aValue = Character.getNumericValue(a);
                 value = Integer.toString(aValue);
             }
@@ -121,9 +120,7 @@ class ValidityChecker {
         for(final Object value: result) {
             finalResult += (Integer) value;
         }
-
         finalResult = ( 10 - (finalResult % 10) ) % 10;
-
         return finalResult;
     }
 
@@ -132,45 +129,51 @@ class ValidityChecker {
     }
 
 
-    boolean isCoordination(final int luhns) {
-        pn.logger.isType("coordination");
+    private boolean isCoordination(final int luhns) {
+        pn.getLogger().isType("coordination");
         final T_Date date = pn.getDate();
-        int coordValue = Integer.valueOf(pn.getDate().day);
+        final int coordValue = Integer.valueOf(pn.getDate().day);
 
         if(coordValue >= 61 && coordValue <= 91) {
             String underLyingDate = Integer.toString(coordValue - 60);
             date.day = underLyingDate;
-            pn.logger.coordValue(true, coordValue);
+            pn.getLogger().coordValue(true, coordValue);
             if(isValidDate(date)) {
-                pn.logger.date(true);
+                pn.getLogger().date(true);
                 if(luhns == this.pn.getControlNumber()) {
-                    pn.logger.luhns(luhns, true);
-                    pn.type.isCoordination = true;
+                    pn.getLogger().luhns(luhns, true);
+                    pn.getType().isCoordination = true;
                     return true;
                 }
-                else {
-                    pn.logger.luhns(luhns, false);
-                }
+                pn.getLogger().luhns(luhns, false);
+                return false;
             }
-            pn.logger.date(false);
+            pn.getLogger().date(false);
+            return false;
         }
-        else {
-            pn.logger.coordValue(false, coordValue);
-        }
+        pn.getLogger().coordValue(false, coordValue);
         return false;
     }
 
-    boolean isOrganisation(final int luhns) {
-        pn.logger.isType("organisation");
-        if(this.pn.getPrefix().equals("16") || this.pn.input.length() == 11) {
-            this.pn.logger.prefixOrLength(true);
+    private boolean isOrganisation(final int luhns) {
+        pn.getLogger().isType("organisation");
+        if(this.pn.getPrefix().equals("16") || this.pn.getInput().length() == 11) {
+            this.pn.getLogger().prefixOrLength(true);
             if(luhns == this.pn.getControlNumber()) {
-                pn.logger.luhns(luhns, true);
-                pn.type.isOrganisation = true;
-                return true;
+                pn.getLogger().luhns(luhns, true);
+                int orgValue = this.pn.getOrganisationNumber();
+                if(orgValue >= 20) {
+                    this.pn.getLogger().orgValue(true, orgValue);
+                    pn.getType().isOrganisation = true;
+                    return true;
+                }
+                this.pn.getLogger().orgValue(false, orgValue);
+                return false;
             }
+            pn.getLogger().luhns(luhns, false);
+            return false;
         }
-        this.pn.logger.prefixOrLength(false);
+        this.pn.getLogger().prefixOrLength(false);
         return false;
     }
 

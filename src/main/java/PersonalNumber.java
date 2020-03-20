@@ -1,21 +1,15 @@
 import java.util.Calendar;
 
 class PersonalNumber {
-    String input;
-    String fixed;
+    private String input;
+    private String fixed;
     private String prefix;
 
-
-    private String birthDate;
-    private String birthNumber;
     private int controlNumber;
 
-    Type type = new Type();
+    private Type type = new Type();
     private T_Date date;
-    Logger logger;
-
-
-
+    private Logger logger;
 
 
     PersonalNumber(String pn) {
@@ -25,28 +19,39 @@ class PersonalNumber {
         this.date = new T_Date();
     }
 
-
-
-    String getBirthDate() {
-        return this.birthDate;
+    String getInput() {
+        return this.input;
     }
-
-    String getBirthNumber() {
-        return this.birthNumber;
-    }
-
-    int getControlNumber() {
-        return this.controlNumber;
+    String getFixed() {
+        return this.fixed;
     }
 
     String getPrefix() {
         return this.prefix;
+    }
+    int getControlNumber() {
+        return this.controlNumber;
+    }
+
+    int getOrganisationNumber() {
+        return Integer.parseInt(this.date.month);
+    }
+
+    Type getType() {
+        return this.type;
+    }
+
+    Logger getLogger() {
+        return this.logger;
     }
 
 
 
     void checkFormat() {
         logger.start("parsing");
+
+        this.input = this.input.trim();
+        this.fixed = this.input.trim();
         final int len = this.input.length();
         switch (len) {
             case 10:
@@ -62,7 +67,6 @@ class PersonalNumber {
                     addCenturyPrefix(separator);
                     logger.fixed(Character.toString(separator));
                 }
-
                 else {
                     invalidateFormat();
                 }
@@ -111,7 +115,6 @@ class PersonalNumber {
         }
     }
 
-
     private boolean validFormat() {
         logger.length();
         if(onlyDigits()) {
@@ -133,7 +136,6 @@ class PersonalNumber {
     }
 
     private void addCenturyPrefix(final char option) {
-        StringBuffer sb = new StringBuffer(this.fixed);
         final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         final int currentDate = Calendar.getInstance().get(Calendar.DATE);
@@ -163,18 +165,13 @@ class PersonalNumber {
                 break;
         }
         final String prefix = Integer.toString(possibleBirthYear).substring(0,2);
-
         this.prefix = prefix;
     }
-
-
 
     private void removeSeparator(final int index) {
         StringBuffer sb = new StringBuffer(this.fixed);
         this.fixed = sb.deleteCharAt(index).toString();
     }
-
-
 
     boolean onlyDigits() {
         for(int c = 0; c < this.fixed.length(); ++c) {
@@ -185,21 +182,11 @@ class PersonalNumber {
         return true;
     }
 
-
-
-
     void parseBirthDate() {
         final String birthDate = this.fixed.substring(ValidityChecker.BIRTHDATE,ValidityChecker.BIRTHNUMBER);
         this.date.year = this.prefix + birthDate.substring(0,2);
         this.date.month = birthDate.substring(2,4);
         this.date.day = birthDate.substring(4,6);
-        this.birthDate = birthDate;
-
-    }
-
-    void parseBirthNumber() {
-        final String birthNumber = this.fixed.substring(ValidityChecker.BIRTHNUMBER,ValidityChecker.CONTROLNUMBER);
-        this.birthNumber = birthNumber;
     }
 
     void parseControlNumber() {
