@@ -30,7 +30,7 @@ class ValidityChecker {
             return false;
         }
         this.parseFormat();
-        this.pn.logger.startValidating();
+        this.pn.logger.start("validating");
 
         int luhns = calculateLuhns();
         if (this.isRegular(luhns)) {

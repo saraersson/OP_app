@@ -46,7 +46,7 @@ class PersonalNumber {
 
 
     void checkFormat() {
-        logger.startParsing();
+        logger.start("parsing");
         final int len = this.input.length();
         switch (len) {
             case 10:

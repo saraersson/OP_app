@@ -8,13 +8,8 @@ public class Logger {
     }
 
 
-    void startParsing() {
-        System.out.println("start: parsing");
-        System.out.println();
-    }
-
-    void startValidating() {
-        System.out.println("start: validating");
+    void start(String mechanism) {
+        System.out.println("start: " + mechanism);
         System.out.println();
     }
 
@@ -32,7 +27,7 @@ public class Logger {
     }
 
     void length() {
-        System.out.println("length: " + this.pn.input +" is between 10 and 13.");
+        System.out.println("criteria: " + this.pn.input +" is between 10 and 13.");
     }
 
     void format() {
@@ -141,10 +136,10 @@ public class Logger {
 
     void luhns(int luhns, boolean matches) {
         if(matches) {
-            System.out.println("luhns: the calculated control number (" + luhns + ") of " + this.pn.fixed + " matches given control number (" + this.pn.getControlNumber() + ")");
+            System.out.println("criteria: the calculated control number (" + luhns + ") of " + this.pn.fixed + " matches given control number (" + this.pn.getControlNumber() + ")");
         }
         else {
-            System.out.println("luhns: the calculated control number (" + luhns + ") of " + this.pn.fixed + " DOES not match given control number (" + this.pn.getControlNumber() + ")");
+            System.out.println("criteria: the calculated control number (" + luhns + ") of " + this.pn.fixed + " DOES not match given control number (" + this.pn.getControlNumber() + ")");
         }
     }
 
@@ -152,29 +147,29 @@ public class Logger {
         T_Date date = this.pn.getDate();
         String formattedDate = date.day + "/" + date.month + "-" + date.year;
         if(valid) {
-            System.out.println("date: " + formattedDate + " is a valid date");
+            System.out.println("criteria: " + formattedDate + " is a valid date");
         }
         else {
-            System.out.println("date: " + formattedDate + " is NOT a valid date");
+            System.out.println("criteria: " + formattedDate + " is NOT a valid date");
         }
     }
 
     void prefixOrLength(boolean correct) {
         if(correct) {
-            System.out.println("Either the prefix (" + this.pn.getPrefix() + ") of " + this.pn.fixed + " is valid, or the length is 11");
+            System.out.println("criteria: either the prefix (" + this.pn.getPrefix() + ") of " + this.pn.fixed + " is valid, or the length is 11");
         }
         else {
-            System.out.println("The prefix (" + this.pn.getPrefix() + ") of " + this.pn.fixed + " is not 16 and the length is not 11");
+            System.out.println("criteria: the prefix (" + this.pn.getPrefix() + ") of " + this.pn.fixed + " is not 16 and the length is not 11");
         }
     }
 
     void coordValue(boolean valid, int coordValue) {
         if(valid){
             assert(coordValue <= 91 && coordValue >= 61);
-            System.out.println("coord value: coordination value (" + coordValue + ") is between 61 and 91");
+            System.out.println("criteria: coordination value (" + coordValue + ") is between 61 and 91");
         }
         else {
-            System.out.println("coord value: coordination value (" + coordValue + ") is NOT between 61 and 91");
+            System.out.println("criteria: coordination value (" + coordValue + ") is NOT between 61 and 91");
         }
     }
 }
