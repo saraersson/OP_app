@@ -140,7 +140,7 @@ class ValidityChecker {
         if(coordValue >= 61 && coordValue <= 91) {
             String underLyingDate = Integer.toString(coordValue - 60);
             date.day = underLyingDate;
-
+            pn.logger.coordValue(true, coordValue);
             if(isValidDate(date)) {
                 pn.logger.date(true);
                 if(luhns == this.pn.getControlNumber()) {
@@ -154,12 +154,15 @@ class ValidityChecker {
             }
             pn.logger.date(false);
         }
+        else {
+            pn.logger.coordValue(false, coordValue);
+        }
         return false;
     }
 
     boolean isOrganisation(int luhns) {
         pn.logger.isType("organisation");
-        if(this.pn.getPrefix() == "16" || this.pn.input.length() == 11) {
+        if(this.pn.getPrefix().equals("16") || this.pn.input.length() == 11) {
             this.pn.logger.prefixOrLength(true);
             if(luhns == this.pn.getControlNumber()) {
                 pn.logger.luhns(luhns, true);
@@ -167,12 +170,8 @@ class ValidityChecker {
                 return true;
             }
         }
-        else {
-            this.pn.logger.prefixOrLength(false);
-        }
-
-
-        return true;
+        this.pn.logger.prefixOrLength(false);
+        return false;
     }
 
 

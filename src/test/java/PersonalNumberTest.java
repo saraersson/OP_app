@@ -8,14 +8,14 @@ public class PersonalNumberTest {
     // parsing tests
     @Test
     public void legitSwedish_1() {
-        ValidityChecker vc = new ValidityChecker("0005254776");
+        ValidityChecker vc = new ValidityChecker("1701102384");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
 
     @Test
     public void legitSwedish_2() {
-        ValidityChecker vc = new ValidityChecker("9502167829");
+        ValidityChecker vc = new ValidityChecker("1412062380");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
@@ -23,14 +23,14 @@ public class PersonalNumberTest {
 
     @Test
     public void legitSwedish_3() {
-        ValidityChecker vc = new ValidityChecker("9402122429");
+        ValidityChecker vc = new ValidityChecker("7101169295");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
 
     @Test
     public void legitSwedishPlus_1() {
-        ValidityChecker vc = new ValidityChecker("000525+4776");
+        ValidityChecker vc = new ValidityChecker("900118+9811");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
@@ -45,7 +45,7 @@ public class PersonalNumberTest {
 
     @Test
     public void legitSwedishMinus_1() {
-        ValidityChecker vc = new ValidityChecker("000525-4776");
+        ValidityChecker vc = new ValidityChecker("20080903-2386");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
@@ -60,7 +60,7 @@ public class PersonalNumberTest {
 
     @Test
     public void legit12() {
-        ValidityChecker vc = new ValidityChecker("199502167829");
+        ValidityChecker vc = new ValidityChecker("189102279800");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
@@ -68,7 +68,7 @@ public class PersonalNumberTest {
 
     @Test
     public void legit13() {
-        ValidityChecker vc = new ValidityChecker("20000525-4776");
+        ValidityChecker vc = new ValidityChecker("19451016-8885");
         assertTrue(vc.isValid());
         assertTrue(vc.pn.type.isRegular);
     }
@@ -87,10 +87,10 @@ public class PersonalNumberTest {
     @Test
     public void invalidNumber_1() {
         ValidityChecker vc = new ValidityChecker("20000525-4777");
+        assertFalse(vc.isValid());
         assertFalse(vc.pn.type.isRegular);
         assertFalse(vc.pn.type.isCoordination);
         assertFalse(vc.pn.type.isOrganisation);
-        assertFalse(vc.isValid());
 
     }
 
@@ -142,6 +142,47 @@ public class PersonalNumberTest {
     public void invalidFormat_5() {
         ValidityChecker vc = new ValidityChecker("1995021678229");
         assertFalse(vc.isValid());
+
+    }
+
+    @Test
+    public void legitOrganisation_1() {
+        ValidityChecker vc = new ValidityChecker("16556601-6399");
+        assertTrue(vc.isValid());
+        assertFalse(vc.pn.type.isRegular);
+        assertFalse(vc.pn.type.isCoordination);
+        assertTrue(vc.pn.type.isOrganisation);
+    }
+
+    @Test
+    public void legitOrganisation_2() {
+        ValidityChecker vc = new ValidityChecker("857202-7566");
+        assertTrue(vc.isValid());
+        assertFalse(vc.pn.type.isRegular);
+        assertFalse(vc.pn.type.isCoordination);
+        assertTrue(vc.pn.type.isOrganisation);
+
+    }
+
+    @Test
+    public void legitOrganisation_3() {
+        ValidityChecker vc = new ValidityChecker("262000-1111");
+        assertTrue(vc.isValid());
+        assertFalse(vc.pn.type.isRegular);
+        assertFalse(vc.pn.type.isCoordination);
+        assertTrue(vc.pn.type.isOrganisation);
+
+    }
+
+
+    @Test
+    public void legitOrganisation_4() {
+        ValidityChecker vc = new ValidityChecker("556614-3185");
+        assertTrue(vc.isValid());
+        assertFalse(vc.pn.type.isRegular);
+        assertFalse(vc.pn.type.isCoordination);
+        assertTrue(vc.pn.type.isOrganisation);
+
 
     }
 

@@ -167,5 +167,15 @@ public class Logger {
             System.out.println("The prefix (" + this.pn.getPrefix() + ") of " + this.pn.fixed + " is not 16 and the length is not 11");
         }
     }
+
+    void coordValue(boolean valid, int coordValue) {
+        if(valid){
+            assert(coordValue <= 91 && coordValue >= 61);
+            System.out.println("coord value: coordination value (" + coordValue + ") is between 61 and 91");
+        }
+        else {
+            System.out.println("coord value: coordination value (" + coordValue + ") is NOT between 61 and 91");
+        }
+    }
 }
 
