@@ -15,7 +15,6 @@ class ValidityChecker {
     PersonalNumber pn;
 
     final static int BIRTHDATE = 0;
-    final static int COORDINATION = 9;
     final static int BIRTHNUMBER = 6;
     final static int CONTROLNUMBER = 9;
 
@@ -24,17 +23,19 @@ class ValidityChecker {
     }
 
 
+    // check which type of SSN the input could be
     boolean isValid() {
-        this.pn.checkFormat();
+
+        this.pn.checkFormat();      // check input length and century prefix
         if(this.pn.getType().isInvalid) {
             this.pn.getLogger().invalidFormat();
             return false;
         }
-        this.parseFormat();
+        this.parseFormat();         // parse and store birth date and control number
         this.pn.getLogger().start("validating");
 
-        final int luhns = calculateLuhns();
-        if (this.isRegular(luhns)) {
+        final int luhns = calculateLuhns();     // calculate control number
+        if (this.isRegular(luhns)) {            // check if regular SSN
             pn.getLogger().isRegular(true);
             return true;
         }
@@ -42,7 +43,7 @@ class ValidityChecker {
             pn.getLogger().isRegular(false);
         }
 
-        if(this.isCoordination(luhns)) {
+        if(this.isCoordination(luhns)) {        // check if coordination SSN
             pn.getLogger().isCoordination(true);
             return true;
         }
@@ -50,7 +51,7 @@ class ValidityChecker {
             pn.getLogger().isCoordination(false);
         }
 
-        if(this.isOrganisation(luhns)) {
+        if(this.isOrganisation(luhns)) {        // check if organisation SSN
             pn.getLogger().isOrganisation(true);
             return true;
         }
@@ -72,9 +73,9 @@ class ValidityChecker {
         pn.getLogger().isType("regular");
 
         final T_Date date = pn.getDate();
-        if(isValidDate(date)) {
+        if(isValidDate(date)) {         // check if date has even occurred in the history
             pn.getLogger().date(true);
-            if(luhns == this.pn.getControlNumber()) {
+            if(luhns == this.pn.getControlNumber()) {       // check if calculated control number matches given one
                 pn.getLogger().luhns(luhns, true);
                 pn.getType().isRegular = true;
                 return true;
@@ -86,6 +87,8 @@ class ValidityChecker {
         return false;
     }
 
+    // checks if date is valid
+    // will throw and catch DateTimeParseException if invalid date
     private boolean isValidDate(final T_Date dateToCheck) {
         final String date = dateToCheck.day + "/" + dateToCheck.month + "/" + dateToCheck.year;
         DateTimeFormatter f = DateTimeFormatter.ofPattern ("dd/MM/uuuu");
@@ -98,6 +101,7 @@ class ValidityChecker {
         }
     }
 
+    // implementation of luhns algorithm for calculating control number of SSN
     private int calculateLuhns() {
         List result = new ArrayList();
         for(int c = 0; c < this.pn.getFixed().length()-1; ++c) {
@@ -139,9 +143,9 @@ class ValidityChecker {
             String underLyingDate = Integer.toString(coordValue - 60);
             date.day = underLyingDate;
             pn.getLogger().coordValue(true, coordValue);
-            if(isValidDate(date)) {
+            if(isValidDate(date)) {             // check if date (coordValue - 60) has even occurred in the history
                 pn.getLogger().date(true);
-                if(luhns == this.pn.getControlNumber()) {
+                if(luhns == this.pn.getControlNumber()) {       // check if calculated control number matches given one
                     pn.getLogger().luhns(luhns, true);
                     pn.getType().isCoordination = true;
                     return true;
@@ -158,12 +162,14 @@ class ValidityChecker {
 
     private boolean isOrganisation(final int luhns) {
         pn.getLogger().isType("organisation");
+
+        // has to have '16' as century prefix or be 11 characters long
         if(this.pn.getPrefix().equals("16") || this.pn.getInput().length() == 11) {
             this.pn.getLogger().prefixOrLength(true);
-            if(luhns == this.pn.getControlNumber()) {
+            if(luhns == this.pn.getControlNumber()) {       // check if calculated control number matches given one
                 pn.getLogger().luhns(luhns, true);
                 int orgValue = this.pn.getOrganisationNumber();
-                if(orgValue >= 20) {
+                if(orgValue >= 20) {            // middle pair value must be above 20
                     this.pn.getLogger().orgValue(true, orgValue);
                     pn.getType().isOrganisation = true;
                     return true;

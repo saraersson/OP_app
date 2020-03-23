@@ -48,19 +48,23 @@ class PersonalNumber {
     }
 
 
-
+    // trim input and check input length
+    // check if format is valid
+    // remove separators
+    // remove and store century prefix
     void checkFormat() {
         logger.start("parsing");
 
         this.input = this.input.trim();
         this.fixed = this.input.trim();
         final int len = this.input.length();
+
         switch (len) {
             case 10:
                 if(!validFormat('/')){
                     break;
                 }
-                addCenturyPrefix('-');
+                storeCenturyPrefix('-');
                 break;
 
             case 11:
@@ -70,7 +74,7 @@ class PersonalNumber {
                     if(!validFormat('/')){
                         break;
                     }
-                    addCenturyPrefix(separator);
+                    storeCenturyPrefix(separator);
                     logger.fixed(Character.toString(separator));
                     break;
                 }
@@ -132,6 +136,7 @@ class PersonalNumber {
         return false;
     }
 
+    // remove century prefix from fixed and store as prefix
     private void removePrefix() {
         StringBuffer sb = new StringBuffer(this.fixed);
         this.prefix = this.input.substring(0,2);
@@ -139,7 +144,8 @@ class PersonalNumber {
 
     }
 
-    private void addCenturyPrefix(final char option) {
+    // calculate century prefix according to '+' and '-', for input without century prefix
+    private void storeCenturyPrefix(final char option) {
         final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         final int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         final int currentDate = Calendar.getInstance().get(Calendar.DATE);
@@ -149,20 +155,25 @@ class PersonalNumber {
         final int date = Integer.parseInt(this.fixed.substring(4,6));
         switch (option) {
             case '+':
+                // if calculated year is in future
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 200;
                 }
+                // if calculated month or day is in future
                 else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
                     possibleBirthYear -= 200;
                 }
+                // not in future
                 else {
                     possibleBirthYear -= 100;
                 }
                 break;
             case '-':
+                // if calculated year is in future
                 if(possibleBirthYear > currentYear) {
                     possibleBirthYear -= 100;
                 }
+                // if calculated month or day is in future
                 else if(possibleBirthYear == currentYear && (month > currentMonth || month == currentMonth && date > currentDate)) {
                     possibleBirthYear -= 100;
                 }
@@ -172,11 +183,13 @@ class PersonalNumber {
         this.prefix = prefix;
     }
 
+    // remove '+' or '-' from fixed
     private void removeSeparator(final int index) {
         StringBuffer sb = new StringBuffer(this.fixed);
         this.fixed = sb.deleteCharAt(index).toString();
     }
 
+    // check if fixed only contains of digits after potential removal of separator
     boolean onlyDigits() {
         for(int c = 0; c < this.fixed.length(); ++c) {
             if(!Character.isDigit(this.fixed.charAt(c))){
