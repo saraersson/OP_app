@@ -57,7 +57,9 @@ class PersonalNumber {
         final int len = this.input.length();
         switch (len) {
             case 10:
-                check('/');
+                if(!validFormat('/')){
+                    break;
+                }
                 addCenturyPrefix('-');
                 break;
 
@@ -65,35 +67,38 @@ class PersonalNumber {
                 if(this.input.charAt(6) == '+' || this.input.charAt(6) == '-' ) {
                     char separator = this.input.charAt(6);
                     removeSeparator(6);
-                    check(separator);
+                    if(!validFormat('/')){
+                        break;
+                    }
                     addCenturyPrefix(separator);
                     logger.fixed(Character.toString(separator));
+                    break;
                 }
-                else {
-                    invalidateFormat();
-                }
+                invalidateFormat();
                 break;
 
             case 12:
-                if(validFormat()) {
-                    removePrefix();
-                    logger.fixed(this.input.substring(0,2));
+                if(!validFormat()) {
+                    break;
                 }
+                removePrefix();
+                logger.fixed(this.input.substring(0,2));
                 break;
 
             case 13:
                 if(this.input.charAt(8) == '-') {
                     removeSeparator(8);
 
-                    if(validFormat()) {
-                        removePrefix();
-                        logger.fixed(this.input.substring(0,2));
-                        logger.fixed("-");
+                    if(!validFormat()) {
+                        break;
                     }
+                    removePrefix();
+                    logger.fixed(this.input.substring(0,2));
+                    logger.fixed("-");
+                    break;
+
                 }
-                else {
-                    invalidateFormat();
-                }
+                invalidateFormat();
                 break;
 
             default:
@@ -107,14 +112,14 @@ class PersonalNumber {
     }
 
 
-    private void check(final char separator) {
+    private boolean validFormat(final char separator) {
         logger.length();
-        if(onlyDigits()) {
+        if (onlyDigits()) {
             logger.format(separator);
+            return true;
         }
-        else {
-            invalidateFormat();
-        }
+        invalidateFormat();
+        return false;
     }
 
     private boolean validFormat() {
@@ -123,11 +128,8 @@ class PersonalNumber {
             logger.format();
             return true;
         }
-        else {
-            invalidateFormat();
-            return false;
-        }
-
+        invalidateFormat();
+        return false;
     }
 
     private void removePrefix() {

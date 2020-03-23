@@ -148,6 +148,13 @@ public class PersonalNumberTest {
     }
 
     @Test
+    public void invalidFormat_6() {
+        final ValidityChecker vc = new ValidityChecker(".+?94^~~,=+");
+        assertFalse(vc.isValid());
+
+    }
+
+    @Test
     public void legitOrganisation_1() {
         final ValidityChecker vc = new ValidityChecker("16556601-6399");
         assertTrue(vc.isValid());
