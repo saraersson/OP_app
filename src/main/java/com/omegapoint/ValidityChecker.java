@@ -164,7 +164,7 @@ class ValidityChecker {
         pn.getLogger().isType("organisation");
 
         // has to have '16' as century prefix or be 11 characters long
-        if(this.pn.getPrefix().equals("16") || this.pn.getInput().length() == 11) {
+        if(this.pn.getPrefix().equals("16") || this.pn.getInput().length() == 10 || this.pn.getInput().length() == 11) {
             this.pn.getLogger().prefixOrLength(true);
             if(luhns == this.pn.getControlNumber()) {       // check if calculated control number matches given one
                 pn.getLogger().luhns(luhns, true);
