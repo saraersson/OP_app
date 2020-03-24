@@ -141,7 +141,7 @@ class Logger {
 
     void prefixOrLength(final boolean correct) {
         if (correct) {
-            System.out.println("[V] criteria: either the prefix (" + this.pn.getPrefix() + ") of " + this.pn.getFixed() + " is valid, or the length is 10 or 11");
+            System.out.println("[V] criteria: either the prefix (" + this.pn.getPrefix() + ") of " + this.pn.getFixed() + " is 16, or the length is 10 or 11");
         } else {
             System.out.println("[!] criteria: the prefix (" + this.pn.getPrefix() + ") of " + this.pn.getFixed() + " is not 16 and the length is not 10 nor 11");
         }
