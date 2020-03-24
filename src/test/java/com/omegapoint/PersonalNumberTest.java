@@ -165,7 +165,7 @@ public class PersonalNumberTest {
 
     @Test
     public void legitOrganisation_2() {
-        final ValidityChecker vc = new ValidityChecker("857202-7566");
+        final ValidityChecker vc = new ValidityChecker("8572027566");
         assertTrue(vc.isValid());
         assertFalse(vc.pn.getType().isRegular);
         assertFalse(vc.pn.getType().isCoordination);
@@ -186,7 +186,7 @@ public class PersonalNumberTest {
 
     @Test
     public void legitOrganisation_4() {
-        final ValidityChecker vc = new ValidityChecker("556614-3185");
+        final ValidityChecker vc = new ValidityChecker("5566143185");
         assertTrue(vc.isValid());
         assertFalse(vc.pn.getType().isRegular);
         assertFalse(vc.pn.getType().isCoordination);
